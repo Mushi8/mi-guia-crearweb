@@ -1,0 +1,3066 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Manual Maestro HTML: 50 Pasos Correlativos</title>
+    <style>
+        :root {
+            --bg: #f4f4f9;
+            /* Color claro por defecto */
+            --card: #ffffff;
+            /* Fichas blancas por defecto */
+            --text: #1a1a1a;
+        }
+
+        .modo-oscuro {
+            --bg: #0d1117;
+            /* El oscuro de tu imagen */
+            --card: #161b22;
+            /* El color de ficha de tu imagen */
+            --text: #c9d1d9;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            transition: all 0.4s ease;
+            /* Suaviza el cambio */
+        }
+
+        /* 1. Reset de colores para las fichas */
+        .ficha {
+            background-color: var(--card) !important;
+            color: var(--text) !important;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 100% !important;
+            box-sizing: border-box;
+        }
+
+
+
+        /* 4. AJUSTE ESPECÍFICO MODO OSCURO */
+        .modo-oscuro .btn-ver {
+            color: #58a6ff !important;
+            /* Un azul brillante para que resalte en oscuro */
+        }
+
+        .modo-oscuro .ficha-head span:first-child {
+            color: var(--accent) !important;
+            /* El número en azul brillante */
+        }
+
+        /* Esto obliga a que las tres secciones y el contenedor midan exactamente lo mismo */
+        .container,
+        #seccion-html,
+        #seccion-css,
+        #seccion-js {
+            max-width: 900px !important;
+            width: 95% !important;
+            margin: 80px auto 20px auto !important;
+            /* El 80px es para que no lo tape el menú */
+            padding: 0 !important;
+            display: block;
+            /* Asegura que se comporten como bloques centrados */
+        }
+
+        /* ESTILO DEL FOLIO */
+        .folio {
+            background: #fdfdfd;
+            color: #333;
+            padding: 25px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            min-height: 120px;
+            margin-top: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .ghost-txt {
+            color: #ccc !important;
+            border-color: #eee !important;
+        }
+
+        .highlight {
+            background: var(--new);
+            border: 2px dashed #000;
+            padding: 2px 5px;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 3px;
+        }
+
+        /* FICHAS INDIVIDUALES */
+        .ficha {
+            background: var(--card);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* FUERZA BRUTA: El título de la ficha será BLANCO SIEMPRE */
+        .ficha-head span,
+        .ficha-head b,
+        .ficha-head {
+            color: #ffffff !important;
+            /* Blanco puro */
+            opacity: 1 !important;
+            font-weight: bold !important;
+            text-shadow: none !important;
+            /* Quitamos sombras que puedan ensuciar */
+        }
+
+        /* Fondo de la cabecera sólido para asegurar contraste */
+        .ficha-head {
+            background-color: #2c3e50 !important;
+            /* Gris azulado muy oscuro */
+            padding: 10px 15px !important;
+            border-radius: 8px 8px 0 0 !important;
+        }
+
+        /* Y esto arregla el título principal del manual */
+        h1 {
+            color: var(--text);
+            transition: color 0.4s ease;
+        }
+
+        .ficha-body {
+            padding: 20px;
+        }
+
+        .code-block {
+            background: #000;
+            color: #7ee787;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            margin: 15px 0;
+            border-left: 4px solid var(--accent);
+            white-space: pre-wrap;
+        }
+
+        .btn-ver {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-ver:hover {
+            background: var(--new);
+        }
+
+        .demo {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #30363d;
+            padding-top: 20px;
+        }
+
+        .tips {
+            background: rgba(88, 166, 255, 0.05);
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.9rem;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+
+        /* Estilos para el Menú que no tenías */
+        #menu-navegacion {
+            position: fixed;
+            /* Esto hace que el menú te siga al bajar */
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            gap: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        #menu-navegacion button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #btn-maestro {
+            background: #444;
+            color: white;
+        }
+
+        /* Esto evita que el menú tape el contenido al hacer clic en los botones */
+        [id^="seccion-"] {
+            scroll-margin-top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <body class="modo-oscuro">
+        <nav id="menu-navegacion">
+            <button onclick="document.getElementById('seccion-html').scrollIntoView({behavior: 'smooth'})">🏗️
+                HTML</button>
+            <button onclick="document.getElementById('seccion-css').scrollIntoView({behavior: 'smooth'})">🎨
+                CSS</button>
+            <button onclick="document.getElementById('seccion-js').scrollIntoView({behavior: 'smooth'})">⚡ JS</button>
+            <button id="btn-maestro">🌙 Modo</button>
+        </nav>
+        <div class="container">
+            <h1>🚀 Manual HTML: 50 Etiquetas de Cero a Héroe</h1>
+
+            <div id="seccion-html">
+                <div class="ficha" style="border-left: 4px solid #4a90e2;">
+                    <div class="ficha-head">
+                        <span>0. La Estructura Base (Invisible)</span>
+                    </div>
+                    <div class="ficha-body">
+                        <p>Antes de escribir texto, toda web necesita avisar al navegador qué reglas va a usar. Estos
+                            elementos no se ven en la pantalla, pero son obligatorios:</p>
+
+                        <div class="code-block">
+                            <span style="color: #6a9955;">&lt;!-- Indica que es HTML5 moderno --&gt;</span><br>
+                            <strong>&lt;!DOCTYPE html&gt;</strong><br><br>
+                            <span style="color: #6a9955;">&lt;!-- Abre el documento y define el idioma --&gt;</span><br>
+                            <strong>&lt;html lang="es"&gt;</strong>
+                        </div>
+
+                        <div class="tips">
+                            <b>💡 Dato clave:</b> El <code>DOCTYPE</code> siempre va en la línea 1. Si no lo pones, el
+                            navegador puede interpretar tu web de forma antigua y "romper" el diseño.
+                        </div>
+                    </div>
+                </div>
+                <div class="ficha">
+                    <div class="ficha-head"><span>1. &lt;h1&gt;</span> <span>Título Nivel 1</span></div>
+                    <div class="ficha-body">
+                        <p>Es la etiqueta más importante jerárquicamente. Define el tema principal de la página.</p>
+                        <div class="code-block">&lt;h1&gt;Mi Proyecto Web&lt;/h1&gt;</div>
+                        <div class="tips">💡 <b>Uso:</b> Solo debe haber un H1 por página para un buen SEO.</div>
+                        <button class="btn-ver" onclick="toggle('d1')">Ver Construcción</button>
+                        <div id="d1" class="demo">
+                            <div class="folio">
+                                <h1 class="highlight">Mi Proyecto Web</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>2. &lt;p&gt;</span> <span>Párrafo</span></div>
+                    <div class="ficha-body">
+                        <p>Define bloques de texto normal. El navegador añade un margen automático para separarlos.</p>
+                        <div class="code-block">&lt;p&gt;Este es el texto del párrafo.&lt;/p&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d2')">Ver Construcción</button>
+                        <div id="d2" class="demo">
+                            <div class="folio">
+                                <h1 class="ghost-txt">Mi Proyecto Web</h1>
+                                <p class="highlight">Este es el texto del párrafo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>3. &lt;strong&gt;</span> <span>Negrita Importante</span></div>
+                    <div class="ficha-body">
+                        <p>Resalta texto con importancia semántica. Visualmente se ve en negrita.</p>
+                        <div class="code-block">&lt;p&gt;Esto es &lt;strong&gt;muy importante&lt;/strong&gt;.&lt;/p&gt;
+                        </div>
+                        <button class="btn-ver" onclick="toggle('d3')">Ver Construcción</button>
+                        <div id="d3" class="demo">
+                            <div class="folio">
+                                <h1 class="ghost-txt">Mi Proyecto Web</h1>
+                                <p class="ghost-txt">Esto es <strong class="highlight">muy importante</strong>.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>4. &lt;a&gt;</span> <span>Hipervínculo</span></div>
+                    <div class="ficha-body">
+                        <p>Crea enlaces a otras páginas. Usa el atributo <code>href</code> para la dirección.</p>
+                        <div class="code-block">&lt;a href="https://google.com"&gt;Ir a Google&lt;/a&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d4')">Ver Construcción</button>
+                        <div id="d4" class="demo">
+                            <div class="folio">
+                                <h1 class="ghost-txt">Título...</h1>
+                                <p class="ghost-txt">Visita este link: <a href="#" class="highlight"
+                                        style="color:blue">Ir a
+                                        Google</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>5. &lt;img&gt;</span> <span>Imagen</span></div>
+                    <div class="ficha-body">
+                        <p>Inserta imágenes. No tiene etiqueta de cierre (autocierre).</p>
+                        <div class="code-block">&lt;img src="imagen.jpg" alt="Descripción"&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d5')">Ver Construcción</button>
+                        <div id="d5" class="demo">
+                            <div class="folio">
+                                <h1 class="ghost-txt">Título</h1>
+                                <div class="highlight"
+                                    style="width:100px; height:60px; border:1px solid #000; text-align:center; line-height:60px;">
+                                    IMAGEN</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>6. &lt;ul&gt; & &lt;li&gt;</span> <span>Lista con Puntos</span></div>
+                    <div class="ficha-body">
+                        <p>Crea listas desordenadas (con viñetas). <code>ul</code> es el contenedor y <code>li</code>
+                            cada
+                            ítem.
+                        </p>
+                        <div class="code-block">&lt;ul&gt;
+                            &lt;li&gt;Elemento 1&lt;/li&gt;
+                            &lt;/ul&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d6')">Ver Construcción</button>
+                        <div id="d6" class="demo">
+                            <div class="folio">
+                                <ul class="highlight">
+                                    <li>Elemento 1</li>
+                                    <li>Elemento 2</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>7. &lt;ol&gt;</span> <span>Lista Numerada</span></div>
+                    <div class="ficha-body">
+                        <p>Lista ordenada donde el navegador pone los números automáticamente.</p>
+                        <div class="code-block">&lt;ol&gt;
+                            &lt;li&gt;Primero&lt;/li&gt;
+                            &lt;/ol&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d7')">Ver Construcción</button>
+                        <div id="d7" class="demo">
+                            <div class="folio">
+                                <ul class="ghost-txt">
+                                    <li>Lista anterior...</li>
+                                </ul>
+                                <ol class="highlight">
+                                    <li>Paso Uno</li>
+                                    <li>Paso Dos</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>8. &lt;br&gt;</span> <span>Salto de Línea</span></div>
+                    <div class="ficha-body">
+                        <p>Fuerza un salto de línea dentro de un texto sin crear un nuevo párrafo.</p>
+                        <div class="code-block">Línea 1 &lt;br&gt; Línea 2</div>
+                        <button class="btn-ver" onclick="toggle('d8')">Ver Construcción</button>
+                        <div id="d8" class="demo">
+                            <div class="folio">
+                                <p>Texto arriba <span class="highlight">&lt;br&gt;</span><br>Texto abajo</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>9. &lt;hr&gt;</span> <span>Línea Divisoria</span></div>
+                    <div class="ficha-body">
+                        <p>Crea una línea horizontal para separar secciones de contenido.</p>
+                        <div class="code-block">&lt;hr&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d9')">Ver Construcción</button>
+                        <div id="d9" class="demo">
+                            <div class="folio">
+                                <h1 class="ghost-txt">Sección A</h1>
+                                <hr class="highlight">
+                                <h1 class="ghost-txt">Sección B</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>10. &lt;div&gt;</span> <span>Contenedor Genérico</span></div>
+                    <div class="ficha-body">
+                        <p>Es una "caja" vacía que se usa para agrupar otros elementos y darles estilo.</p>
+                        <div class="code-block">&lt;div class="caja"&gt; ... &lt;/div&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d10')">Ver Construcción</button>
+                        <div id="d10" class="demo">
+                            <div class="folio">
+                                <div class="highlight" style="padding:10px; border:1px solid #333;">
+                                    <p class="ghost-txt">Contenido dentro del DIV</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align:center; margin: 50px 0;">
+                    <p>He cubierto las 10 bases. ¿Quieres que te envíe los siguientes 10 (Formularios) ahora mismo?</p>
+                </div>
+                <div class="ficha">
+                    <div class="ficha-head"><span>11. &lt;form&gt;</span> <span>Contenedor de Formulario</span></div>
+                    <div class="ficha-body">
+                        <p>Es la etiqueta que envuelve todos los campos de entrada. Define a dónde se envían los datos.
+                        </p>
+                        <div class="code-block">&lt;form action="/enviar" method="POST"&gt;
+                            ... campos aquí ...
+                            &lt;/form&gt;</div>
+                        <div class="tips">🛡️ <b>Seguridad:</b> Usa siempre <code>method="POST"</code> para datos
+                            sensibles
+                            para
+                            que no se vean en la URL.</div>
+                        <button class="btn-ver" onclick="toggle('d11')">Ver en el Folio</button>
+                        <div id="d11" class="demo">
+                            <div class="folio">
+                                <div class="ghost-txt">... (resto de la web) ...</div>
+                                <form class="highlight" style="border: 2px dashed #000; padding: 10px;">
+                                    [Espacio del Formulario]
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>12. &lt;label&gt;</span> <span>Etiqueta de Texto</span></div>
+                    <div class="ficha-body">
+                        <p>Le dice al usuario qué debe escribir en el campo. Es vital para la accesibilidad.</p>
+                        <div class="code-block">&lt;label&gt;Nombre de usuario:&lt;/label&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d12')">Ver en el Folio</button>
+                        <div id="d12" class="demo">
+                            <div class="folio">
+                                <form style="border: 1px solid #ccc; padding: 10px;">
+                                    <label class="highlight">Nombre de usuario:</label>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>13. &lt;input type="text"&gt;</span> <span>Campo de Texto</span></div>
+                    <div class="ficha-body">
+                        <p>Crea una caja donde el usuario puede escribir una sola línea de texto.</p>
+                        <div class="code-block">&lt;input type="text" placeholder="Escribe aquí..."&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d13')">Ver en el Folio</button>
+                        <div id="d13" class="demo">
+                            <div class="folio">
+                                <form style="border: 1px solid #ccc; padding: 10px;">
+                                    <label class="ghost-txt">Nombre de usuario:</label>
+                                    <input type="text" class="highlight" placeholder="Escribe aquí...">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>14. &lt;input type="password"&gt;</span> <span>Campo de
+                            Contraseña</span>
+                    </div>
+                    <div class="ficha-body">
+                        <p>Igual que el de texto, pero oculta los caracteres con puntos por seguridad visual.</p>
+                        <div class="code-block">&lt;input type="password"&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d14')">Ver en el Folio</button>
+                        <div id="d14" class="demo">
+                            <div class="folio">
+                                <form style="border: 1px solid #ccc; padding: 10px;">
+                                    <p class="ghost-txt">Usuario: [____]</p>
+                                    <label class="ghost-txt">Password:</label>
+                                    <input type="password" value="secret" class="highlight">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>15. &lt;button&gt;</span> <span>Botón de Acción</span></div>
+                    <div class="ficha-body">
+                        <p>Sirve para que el usuario haga clic y envíe el formulario o ejecute algo.</p>
+                        <div class="code-block">&lt;button type="submit"&gt;Enviar Datos&lt;/button&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d15')">Ver en el Folio</button>
+                        <div id="d15" class="demo">
+                            <div class="folio">
+                                <form style="border: 1px solid #ccc; padding: 10px;">
+                                    <input type="text" class="ghost-txt" placeholder="Usuario...">
+                                    <button type="button" class="highlight">Enviar Datos</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>16. &lt;textarea&gt;</span> <span>Área de Texto Largo</span></div>
+                    <div class="ficha-body">
+                        <p>Se usa cuando necesitas que el usuario escriba mucho texto (como un comentario).</p>
+                        <div class="code-block">&lt;textarea rows="4"&gt;&lt;/textarea&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d16')">Ver en el Folio</button>
+                        <div id="d16" class="demo">
+                            <div class="folio">
+                                <label class="ghost-txt">Tu mensaje:</label><br>
+                                <textarea class="highlight" style="width:100%">Escribe un mensaje largo...</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>17. &lt;select&gt; & &lt;option&gt;</span> <span>Lista
+                            Desplegable</span>
+                    </div>
+                    <div class="ficha-body">
+                        <p>Permite elegir una opción de una lista cerrada.</p>
+                        <div class="code-block">&lt;select&gt;
+                            &lt;option&gt;Opción A&lt;/option&gt;
+                            &lt;/select&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d17')">Ver en el Folio</button>
+                        <div id="d17" class="demo">
+                            <div class="folio">
+                                <label class="ghost-txt">Elige país:</label>
+                                <select class="highlight">
+                                    <option>España</option>
+                                    <option>México</option>
+                                    <option>Argentina</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>18. &lt;fieldset&gt; & &lt;legend&gt;</span> <span>Grupo de
+                            Campos</span>
+                    </div>
+                    <div class="ficha-body">
+                        <p>Sirve para agrupar visualmente varios campos relacionados con un recuadro y un título.</p>
+                        <div class="code-block">&lt;fieldset&gt;
+                            &lt;legend&gt;Datos Personales&lt;/legend&gt;
+                            ... campos ...
+                            &lt;/fieldset&gt;</div>
+                        <button class="btn-ver" onclick="toggle('d18')">Ver en el Folio</button>
+                        <div id="d18" class="demo">
+                            <div class="folio">
+                                <fieldset class="highlight">
+                                    <legend>Datos Personales</legend>
+                                    <p class="ghost-txt">Nombre: [___]</p>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>19. &lt;input type="checkbox"&gt;</span> <span>Casilla de
+                            Verificación</span>
+                    </div>
+                    <div class="ficha-body">
+                        <p>Para opciones donde puedes marcar una, varias o ninguna.</p>
+                        <div class="code-block">&lt;input type="checkbox"&gt; Acepto los términos</div>
+                        <button class="btn-ver" onclick="toggle('d19')">Ver en el Folio</button>
+                        <div id="d19" class="demo">
+                            <div class="folio">
+                                <input type="checkbox" checked class="highlight"> <label class="ghost-txt">Acepto los
+                                    términos</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ficha">
+                    <div class="ficha-head"><span>20. &lt;input type="radio"&gt;</span> <span>Botón de Selección
+                            Única</span>
+                    </div>
+                    <div class="ficha-body">
+                        <p>Para elegir solo UNA opción entre varias.</p>
+                        <div class="code-block">&lt;input type="radio" name="genero"&gt; Hombre
+                            &lt;input type="radio" name="genero"&gt; Mujer</div>
+                        <button class="btn-ver" onclick="toggle('d20')">Ver en el Folio</button>
+                        <div id="d20" class="demo">
+                            <div class="folio">
+                                <p class="ghost-txt">Selecciona uno:</p>
+                                <input type="radio" name="r" checked class="highlight"> Opción A
+                                <input type="radio" name="r" class="highlight"> Opción B
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha">
+                <div class="ficha-head"><span>21. &lt;table&gt;</span> <span>La Mesa de Datos</span></div>
+                <div class="ficha-body">
+                    <p>Es el contenedor principal para mostrar datos tabulares (filas y columnas).</p>
+                    <div class="code-block">&lt;table&gt;
+                        ... contenido de la tabla ...
+                        &lt;/table&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d21')">Ver en el Folio</button>
+                    <div id="d21" class="demo">
+                        <div class="folio">
+                            <div class="ghost-txt">Formulario arriba...</div>
+                            <table class="highlight" style="width:100%; border:1px solid #333;">
+                                <tr>
+                                    <td>[ Espacio de Tabla ]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>22. &lt;tr&gt;</span> <span>Fila (Table Row)</span></div>
+                <div class="ficha-body">
+                    <p>Define una línea horizontal dentro de la tabla. Siempre va dentro de &lt;table&gt;.</p>
+                    <div class="code-block">&lt;tr&gt; ... celdas aquí ... &lt;/tr&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d22')">Ver en el Folio</button>
+                    <div id="d22" class="demo">
+                        <div class="folio">
+                            <table style="width:100%; border:1px solid #ccc;">
+                                <tr class="highlight">
+                                    <td>Fila 1</td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>Fila 2</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>23. &lt;th&gt;</span> <span>Encabezado de Celda</span></div>
+                <div class="ficha-body">
+                    <p>Es una celda especial para los títulos de las columnas. El texto suele salir en negrita y
+                        centrado.
+                    </p>
+                    <div class="code-block">&lt;th&gt;Título Columna&lt;/th&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d23')">Ver en el Folio</button>
+                    <div id="d23" class="demo">
+                        <div class="folio">
+                            <table style="width:100%; border:1px solid #ccc;">
+                                <tr>
+                                    <th class="highlight">ID</th>
+                                    <th class="highlight">Usuario</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>24. &lt;td&gt;</span> <span>Celda de Datos</span></div>
+                <div class="ficha-body">
+                    <p>Es la celda normal donde va la información. Va dentro de cada &lt;tr&gt;.</p>
+                    <div class="code-block">&lt;td&gt;Dato Real&lt;/td&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d24')">Ver en el Folio</button>
+                    <div id="d24" class="demo">
+                        <div class="folio">
+                            <table style="width:100%; border:1px solid #ccc;">
+                                <tr>
+                                    <th class="ghost-txt">ID</th>
+                                    <th class="ghost-txt">Usuario</th>
+                                </tr>
+                                <tr>
+                                    <td class="highlight">001</td>
+                                    <td class="highlight">Admin</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>25. &lt;header&gt;</span> <span>Cabecera Semántica</span></div>
+                <div class="ficha-body">
+                    <p>No confundir con &lt;head&gt;. Esta etiqueta envuelve el contenido introductorio (logo, título,
+                        buscador)
+                        de tu página.</p>
+                    <div class="code-block">&lt;header&gt; ... contenido visual ... &lt;/header&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d25')">Ver en el Folio</button>
+                    <div id="d25" class="demo">
+                        <div class="folio">
+                            <header class="highlight" style="border-bottom: 2px solid #ccc; margin-bottom: 10px;">
+                                <h1 style="font-size:1rem; margin:0;">[ LOGO DEL SITIO ]</h1>
+                            </header>
+                            <p class="ghost-txt">Resto de la web...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>26. &lt;nav&gt;</span> <span>Navegación</span></div>
+                <div class="ficha-body">
+                    <p>Define un bloque que contiene enlaces de navegación (el menú principal).</p>
+                    <div class="code-block">&lt;nav&gt;
+                        &lt;a href="#"&gt;Inicio&lt;/a&gt;
+                        &lt;/nav&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d26')">Ver en el Folio</button>
+                    <div id="d26" class="demo">
+                        <div class="folio">
+                            <header class="ghost-txt">Header...</header>
+                            <nav class="highlight">
+                                <a href="#">Inicio</a> | <a href="#">Perfil</a> | <a href="#">Salir</a>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>27. &lt;main&gt;</span> <span>Contenido Principal</span></div>
+                <div class="ficha-body">
+                    <p>Engloba el contenido único y más importante de la página. Ayuda a los buscadores a saber qué es
+                        lo
+                        relevante.</p>
+                    <div class="code-block">&lt;main&gt; ... todo lo importante ... &lt;/main&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d27')">Ver en el Folio</button>
+                    <div id="d27" class="demo">
+                        <div class="folio">
+                            <header class="ghost-txt">Header + Nav...</header>
+                            <main class="highlight" style="padding: 10px 0;">
+                                <p>Este es el corazón de mi página web.</p>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>28. &lt;section&gt;</span> <span>Sección Temática</span></div>
+                <div class="ficha-body">
+                    <p>Se usa para agrupar contenido relacionado dentro de una página (ej: sección de noticias, sección
+                        de
+                        contacto).</p>
+                    <div class="code-block">&lt;section&gt; ... grupo de temas ... &lt;/section&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d28')">Ver en el Folio</button>
+                    <div id="d28" class="demo">
+                        <div class="folio">
+                            <main class="ghost-txt">
+                                <section class="highlight">
+                                    <h2>Noticias</h2>
+                                    <p>Última hora: Aprendiendo HTML.</p>
+                                </section>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>29. &lt;article&gt;</span> <span>Artículo Independiente</span></div>
+                <div class="ficha-body">
+                    <p>Se usa para contenido que tiene sentido por sí mismo, como un post de un blog o un comentario.
+                    </p>
+                    <div class="code-block">&lt;article&gt; ... contenido autónomo ... &lt;/article&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d29')">Ver en el Folio</button>
+                    <div id="d29" class="demo">
+                        <div class="folio">
+                            <section class="ghost-txt">
+                                <article class="highlight" style="border: 1px solid #eee; padding: 5px;">
+                                    <h3>Título del Post</h3>
+                                    <p>Contenido del artículo...</p>
+                                </article>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>30. &lt;footer&gt;</span> <span>Pie de Página</span></div>
+                <div class="ficha-body">
+                    <p>Cierra la página. Contiene información de autoría, contacto, avisos legales o redes sociales.</p>
+                    <div class="code-block">&lt;footer&gt; © 2026 Mi Web Segura &lt;/footer&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d30')">Ver en el Folio</button>
+                    <div id="d30" class="demo">
+                        <div class="folio">
+                            <div class="ghost-txt" style="min-height: 50px;">... Contenido principal arriba ...</div>
+                            <footer class="highlight" style="border-top: 1px solid #ccc; font-size: 0.8rem;">
+                                © 2026 Manual DevSec - Todos los derechos reservados.
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha">
+                <div class="ficha-head"><span>31. Atributo ID</span> <span>Identificador Único</span></div>
+                <div class="ficha-body">
+                    <p>Es el nombre exclusivo de un elemento. No puede haber dos iguales en la misma página. Es vital
+                        para
+                        que
+                        el JavaScript sepa exactamente a quién atacar o defender.</p>
+                    <div class="code-block">&lt;div id="mi-caja-segura"&gt; ... &lt;/div&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d31')">Ver en el Folio</button>
+                    <div id="d31" class="demo">
+                        <div class="folio">
+                            <div class="highlight" style="border: 2px solid #000;">
+                                Este elemento ahora tiene una identidad: <br>
+                                <code>ID="mi-caja-segura"</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>32. Atributo CLASS</span> <span>Identificador de Grupo</span></div>
+                <div class="ficha-body">
+                    <p>A diferencia del ID, muchos elementos pueden compartir la misma clase. Se usa para dar el mismo
+                        estilo a
+                        varios objetos a la vez.</p>
+                    <div class="code-block">&lt;p class="texto-gris"&gt;Párrafo 1&lt;/p&gt;
+                        &lt;p class="texto-gris"&gt;Párrafo 2&lt;/p&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d32')">Ver en el Folio</button>
+                    <div id="d32" class="demo">
+                        <div class="folio">
+                            <p class="highlight">Soy de la clase "resaltado"</p>
+                            <p class="highlight">Yo también soy de la misma clase</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>33. Atributo TITLE</span> <span>Información Flotante</span></div>
+                <div class="ficha-body">
+                    <p>Muestra un pequeño texto explicativo cuando dejas el ratón encima de un elemento (Tooltip).</p>
+                    <div class="code-block">&lt;span title="Soy una ayuda adicional"&gt;Pasa el ratón&lt;/span&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d33')">Ver en el Folio</button>
+                    <div id="d33" class="demo">
+                        <div class="folio">
+                            <p class="ghost-txt">Pasa el ratón por el texto amarillo:</p>
+                            <span class="highlight" title="¡Lo lograste! Esto es el atributo title.">Pasa el ratón por
+                                aquí</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>34. Atributo ALT</span> <span>Texto Alternativo</span></div>
+                <div class="ficha-body">
+                    <p>Es obligatorio en las imágenes. Si la imagen no carga o el usuario es ciego, el navegador lee
+                        este
+                        texto.
+                    </p>
+                    <div class="code-block">&lt;img src="virus.png" alt="Icono de advertencia de malware"&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d34')">Ver en el Folio</button>
+                    <div id="d34" class="demo">
+                        <div class="folio">
+                            <div
+                                style="background:#eee; width:100px; height:80px; display:flex; align-items:center; justify-content:center; border:1px solid #ccc;">
+                                <span class="highlight">MALWARE.PNG</span>
+                            </div>
+                            <p class="ghost-txt">(Si la imagen fallara, el lector diría: "Icono de advertencia...")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>35. &lt;video&gt;</span> <span>Reproductor de Video</span></div>
+                <div class="ficha-body">
+                    <p>Permite insertar videos sin depender de plataformas externas. Usa el atributo
+                        <code>controls</code>
+                        para
+                        ver el play/pausa.
+                    </p>
+                    <div class="code-block">&lt;video controls width="250"&gt;
+                        &lt;source src="demo.mp4" type="video/mp4"&gt;
+                        &lt;/video&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d35')">Ver en el Folio</button>
+                    <div id="d35" class="demo">
+                        <div class="folio">
+                            <div class="highlight"
+                                style="width:200px; height:120px; background:#000; color:white; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                                <span>▶️ REPRODUCTOR VIDEO</span>
+                                <div style="width:90%; height:5px; background:grey; margin-top:10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>36. &lt;audio&gt;</span> <span>Reproductor de Sonido</span></div>
+                <div class="ficha-body">
+                    <p>Similar al video, pero solo para archivos de sonido. Muy útil para podcasts o alertas de sistema.
+                    </p>
+                    <div class="code-block">&lt;audio controls&gt;
+                        &lt;source src="alerta.mp3" type="audio/mpeg"&gt;
+                        &lt;/audio&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d36')">Ver en el Folio</button>
+                    <div id="d36" class="demo">
+                        <div class="folio">
+                            <div class="highlight"
+                                style="width:100%; height:40px; border-radius:20px; background:#eee; display:flex; align-items:center; padding: 0 15px;">
+                                <span>🔊 0:00 / 3:45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>37. &lt;iframe&gt;</span> <span>Ventana a otra Web</span></div>
+                <div class="ficha-body">
+                    <p>Inserta una página web completa dentro de la tuya (como un mapa de Google o un video de YouTube).
+                    </p>
+                    <div class="code-block">&lt;iframe src="https://wikipedia.org"&gt;&lt;/iframe&gt;</div>
+                    <div class="tips" style="border-left-color: #f85149;">🛡️ <b>Alerta Hacker:</b> El iframe es
+                        peligroso.
+                        Los
+                        atacantes lo usan para "secuestrar" clics. Usa siempre <code>sandbox</code>.</div>
+                    <button class="btn-ver" onclick="toggle('d37')">Ver en el Folio</button>
+                    <div id="d37" class="demo">
+                        <div class="folio">
+                            <p class="ghost-txt">Mi web arriba...</p>
+                            <div class="highlight" style="width:100%; height:100px; border:2px solid blue;">
+                                <small>Contenido de OTRA web cargando aquí...</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>38. &lt;canvas&gt;</span> <span>Lienzo de Dibujo</span></div>
+                <div class="ficha-body">
+                    <p>Es un espacio en blanco donde puedes "dibujar" mediante programación (gráficos, juegos,
+                        animaciones).
+                    </p>
+                    <div class="code-block">&lt;canvas id="miLienzo"&gt;&lt;/canvas&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d38')">Ver en el Folio</button>
+                    <div id="d38" class="demo">
+                        <div class="folio">
+                            <canvas class="highlight"
+                                style="width:100%; height:80px; border:1px solid #ccc; background: white;">
+                            </canvas>
+                            <p style="font-size:10px;">[Aquí el JavaScript dibujaría píxeles]</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>39. &lt;svg&gt;</span> <span>Gráficos Vectoriales</span></div>
+                <div class="ficha-body">
+                    <p>Sirve para dibujar formas (círculos, líneas) que nunca se pixelan, sin importar cuánto zoom
+                        hagas.
+                    </p>
+                    <div class="code-block">&lt;svg width="50" height="50"&gt;
+                        &lt;circle cx="25" cy="25" r="20" /&gt;
+                        &lt;/svg&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d39')">Ver en el Folio</button>
+                    <div id="d39" class="demo">
+                        <div class="folio">
+                            <svg width="60" height="60" class="highlight">
+                                <circle cx="30" cy="30" r="25" fill="red" />
+                            </svg>
+                            <span class="ghost-txt">Un círculo perfecto dibujado con código.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>40. &lt;span&gt;</span> <span>El Mini-Contenedor</span></div>
+                <div class="ficha-body">
+                    <p>Es igual que un <code>&lt;div&gt;</code>, pero no salta de línea. Se usa para aplicar estilo a
+                        una
+                        sola
+                        palabra dentro de una frase.</p>
+                    <div class="code-block">El virus es &lt;span class="rojo"&gt;Peligroso&lt;/span&gt;.</div>
+                    <button class="btn-ver" onclick="toggle('d40')">Ver en el Folio</button>
+                    <div id="d40" class="demo">
+                        <div class="folio">
+                            <p>El sistema está <span class="highlight" style="color:red;">CRÍTICO</span> en este
+                                momento.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha">
+                <div class="ficha-head"><span>41. &lt;meta&gt;</span> <span>Información Invisible</span></div>
+                <div class="ficha-body">
+                    <p>Se colocan en el &lt;head&gt;. Dan instrucciones al navegador sobre el idioma, el autor o la
+                        descripción
+                        para Google.</p>
+                    <div class="code-block">&lt;meta charset="UTF-8"&gt;
+                        &lt;meta name="description" content="Mi Guía Pro"&gt;</div>
+                    <div class="tips">🛡️ <b>Seguridad:</b> Aquí se configura el <b>CSP</b> (Content Security Policy)
+                        para
+                        evitar que hackers inyecten código malicioso.</div>
+                    <button class="btn-ver" onclick="toggle('d41')">Ver Representación</button>
+                    <div id="d41" class="demo">
+                        <div class="folio" style="background: #eef;">
+                            <p>⚙️ <b>Configuración Interna:</b> Caracteres UTF-8 cargados. <br>
+                                (Esta etiqueta no dibuja nada, pero hace que todo funcione).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>42. &lt;link&gt;</span> <span>Conexión Externa</span></div>
+                <div class="ficha-body">
+                    <p>Sirve para conectar tu HTML con archivos externos, principalmente con las hojas de estilo (CSS) o
+                        el
+                        icono de la pestaña (favicon).</p>
+                    <div class="code-block">&lt;link rel="stylesheet" href="estilos.css"&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d42')">Ver Representación</button>
+                    <div id="d42" class="demo">
+                        <div class="folio">
+                            <p class="highlight">🎨 Estilos CSS conectados y aplicándose...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>43. &lt;script&gt;</span> <span>El Cerebro (JS)</span></div>
+                <div class="ficha-body">
+                    <p>Carga código JavaScript para que tu web haga cosas (animaciones, validaciones, cálculos).</p>
+                    <div class="code-block">&lt;script src="magia.js"&gt;&lt;/script&gt;</div>
+                    <div class="tips" style="border-left-color: #f85149;">🛡️ <b>Alerta:</b> Nunca cargues scripts de
+                        fuentes en
+                        las que no confíes. Podrían robar las cookies de tus usuarios.</div>
+                    <button class="btn-ver" onclick="toggle('d43')">Ver Representación</button>
+                    <div id="d43" class="demo">
+                        <div class="folio">
+                            <p class="highlight">🧠 JavaScript activo. Esperando interacción...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>44. &lt;style&gt;</span> <span>Diseño Interno</span></div>
+                <div class="ficha-body">
+                    <p>Se usa para escribir código CSS directamente dentro del HTML sin necesidad de un archivo aparte.
+                    </p>
+                    <div class="code-block">&lt;style&gt;
+                        h1 { color: red; }
+                        &lt;/style&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d44')">Ver Construcción</button>
+                    <div id="d44" class="demo">
+                        <div class="folio">
+                            <h1 style="color: red; border: 2px solid red; padding: 5px;">Título coloreado con
+                                &lt;style&gt;
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>45. &lt;blockquote&gt;</span> <span>Cita Textual</span></div>
+                <div class="ficha-body">
+                    <p>Se usa para citar frases de otras personas o fuentes. El navegador suele darle un margen extra.
+                    </p>
+                    <div class="code-block">&lt;blockquote&gt; "Pienso, luego existo" &lt;/blockquote&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d45')">Ver en el Folio</button>
+                    <div id="d45" class="demo">
+                        <div class="folio">
+                            <p class="ghost-txt">Como dijo el filósofo:</p>
+                            <blockquote class="highlight"
+                                style="margin-left: 30px; border-left: 3px solid #ccc; padding-left: 10px;">
+                                "La seguridad web no es un producto, es un proceso."
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>46. &lt;code&gt;</span> <span>Fragmento de Código</span></div>
+                <div class="ficha-body">
+                    <p>Muestra texto con una fuente monoespaciada (como de programador). Ideal para tutoriales.</p>
+                    <div class="code-block">&lt;p&gt;Usa el comando &lt;code&gt;sudo&lt;/code&gt; para ser
+                        admin.&lt;/p&gt;
+                    </div>
+                    <button class="btn-ver" onclick="toggle('d46')">Ver en el Folio</button>
+                    <div id="d46" class="demo">
+                        <div class="folio">
+                            <p>Para entrar, escribe <code class="highlight"
+                                    style="font-family: monospace; background: #eee;">LOGIN_ADMIN</code> en la consola.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>47. &lt;pre&gt;</span> <span>Texto Preformateado</span></div>
+                <div class="ficha-body">
+                    <p>Muestra el texto EXACTAMENTE como lo escribas en el código, respetando todos los espacios y
+                        saltos de
+                        línea.</p>
+                    <div class="code-block">&lt;pre&gt;
+                        Línea 1
+                        Línea con sangría
+                        &lt;/pre&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d47')">Ver en el Folio</button>
+                    <div id="d47" class="demo">
+                        <div class="folio">
+                            <pre class="highlight">
+   Etapa Final
+      Paso 47
+         Conseguido.
+                    </pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>48. &lt;details&gt;</span> <span>Acordeón Desplegable</span></div>
+                <div class="ficha-body">
+                    <p>Crea una sección que el usuario puede abrir y cerrar. <code>summary</code> es el título que se ve
+                        siempre.</p>
+                    <div class="code-block">&lt;details&gt;
+                        &lt;summary&gt;Ver más&lt;/summary&gt;
+                        Contenido oculto...
+                        &lt;/details&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d48')">Ver en el Folio</button>
+                    <div id="d48" class="demo">
+                        <div class="folio">
+                            <details class="highlight">
+                                <summary>Haz clic para leer la clave secreta</summary>
+                                <p>La clave es: 12345 (¡Cambiala!)</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>49. &lt;abbr&gt;</span> <span>Abreviatura</span></div>
+                <div class="ficha-body">
+                    <p>Ayuda a explicar siglas. Al poner el ratón encima, sale el significado completo.</p>
+                    <div class="code-block">&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d49')">Ver en el Folio</button>
+                    <div id="d49" class="demo">
+                        <div class="folio">
+                            <p>Estoy aprendiendo <abbr title="HyperText Markup Language" class="highlight"
+                                    style="text-decoration: underline dotted;">HTML</abbr> hoy mismo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha">
+                <div class="ficha-head"><span>50. &lt;dialog&gt;</span> <span>Ventana Emergente</span></div>
+                <div class="ficha-body">
+                    <p>Es el paso final: una etiqueta nativa para crear ventanas modales o pop-ups de alerta.</p>
+                    <div class="code-block">&lt;dialog open&gt;¡Misión Cumplida!&lt;/dialog&gt;</div>
+                    <button class="btn-ver" onclick="toggle('d50')">Ver en el Folio</button>
+                    <div id="d50" class="demo">
+                        <div class="folio" style="position: relative;">
+                            <div class="ghost-txt">Toda tu web terminada detrás...</div>
+                            <div class="highlight"
+                                style="position: absolute; top: 20%; left: 20%; width: 60%; background: white; border: 2px solid black; padding: 10px; text-align: center; box-shadow: 5px 5px 0 #000;">
+                                <b>🥇 50/50 PASOS</b><br>
+                                ¡Felicidades, ya conoces las piezas maestras de la web!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>
+                        <h2 id="seccion-css">Sección 2: CSS</h2>
+                    </span> <span>¿A quién pintamos?</span></div>
+                <div class="ficha-body">
+                    <p>Para cambiar algo, primero escribes el nombre de la etiqueta (sin los brackets) y luego abres
+                        llaves
+                        <code>{ }</code>.
+                    </p>
+                    <div class="code-block">h1 {
+                        /* Aquí van las reglas */
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c1')">Ver en el Folio</button>
+                    <div id="c1" class="demo">
+                        <div class="folio">
+                            <h1 style="color: #ff4500;">Soy el H1 seleccionado</h1>
+                            <p class="ghost-txt">Yo no he sido seleccionado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #32cd32;">
+                <div class="ficha-head"><span>CSS 2. Color de Texto</span> <span>Propiedad: color</span></div>
+                <div class="ficha-body">
+                    <p>Cambia el color de la letra. Puedes usar nombres (red), Hexadecimal (#FF0000) o RGB.</p>
+                    <div class="code-block">p {
+                        color: blue;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c2')">Ver en el Folio</button>
+                    <div id="c2" class="demo">
+                        <div class="folio">
+                            <p style="color: blue;" class="highlight">Ahora este texto es azul.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ffd700;">
+                <div class="ficha-head"><span>CSS 3. Fondo</span> <span>Propiedad: background-color</span></div>
+                <div class="ficha-body">
+                    <p>Cambia el color de fondo de un elemento o de toda la página.</p>
+                    <div class="code-block">body {
+                        background-color: #f0f0f0;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c3')">Ver en el Folio</button>
+                    <div id="c3" class="demo">
+                        <div class="folio" style="background-color: #ffeaa7;">
+                            <p>El fondo del folio ha cambiado a amarillo suave.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff69b4;">
+                <div class="ficha-head"><span>CSS 4. Tamaño de Letra</span> <span>Propiedad: font-size</span></div>
+                <div class="ficha-body">
+                    <p>Controla lo grande o pequeña que es la letra. Se suele medir en píxeles (px).</p>
+                    <div class="code-block">h1 {
+                        font-size: 40px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c4')">Ver en el Folio</button>
+                    <div id="c4" class="demo">
+                        <div class="folio">
+                            <h1 style="font-size: 10px;">Tamaño 10px (Mini)</h1>
+                            <h1 style="font-size: 30px;" class="highlight">Tamaño 30px (Grande)</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #8a2be2;">
+                <div class="ficha-head"><span>CSS 5. Tipografía</span> <span>Propiedad: font-family</span></div>
+                <div class="ficha-body">
+                    <p>Cambia el tipo de letra (Arial, Times New Roman, Monospace, etc).</p>
+                    <div class="code-block">p {
+                        font-family: 'Courier New', monospace;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c5')">Ver en el Folio</button>
+                    <div id="c5" class="demo">
+                        <div class="folio">
+                            <p style="font-family: serif;">Texto con Serif (clásico)</p>
+                            <p style="font-family: sans-serif;" class="highlight">Texto Sans-Serif (moderno)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #00ced1;">
+                <div class="ficha-head"><span>CSS 6. Dimensiones</span> <span>Ancho y Alto</span></div>
+                <div class="ficha-body">
+                    <p>Define el tamaño de las "cajas" (div, img, etc).</p>
+                    <div class="code-block">div {
+                        width: 100px;
+                        height: 50px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c6')">Ver en el Folio</button>
+                    <div id="c6" class="demo">
+                        <div class="folio">
+                            <div class="highlight"
+                                style="width: 50%; height: 40px; background: #ccc; border: 1px solid #000;">
+                                Ancho al 50%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>CSS 7. Bordes</span> <span>Propiedad: border</span></div>
+                <div class="ficha-body">
+                    <p>Dibuja una línea alrededor del elemento. Necesita 3 valores: grosor, estilo y color.</p>
+                    <div class="code-block">div {
+                        border: 2px solid black;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c7')">Ver en el Folio</button>
+                    <div id="c7" class="demo">
+                        <div class="folio">
+                            <p style="border: 2px solid red; padding: 5px;">Borde sólido rojo</p>
+                            <p style="border: 2px dashed blue; padding: 5px;">Borde discontinuo azul</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #4b0082;">
+                <div class="ficha-head"><span>CSS 8. Relleno</span> <span>Propiedad: padding</span></div>
+                <div class="ficha-body">
+                    <p>Es el espacio que hay **dentro** de la caja, entre el texto y el borde.</p>
+                    <div class="code-block">div {
+                        padding: 20px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c8')">Ver en el Folio</button>
+                    <div id="c8" class="demo">
+                        <div class="folio">
+                            <div style="border: 1px solid black; padding: 0px; background: #eee; margin-bottom: 5px;">
+                                Sin
+                                padding (texto pegado)</div>
+                            <div style="border: 1px solid black; padding: 20px; background: #eee;">Con padding 20px
+                                (respira)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #2e8b57;">
+                <div class="ficha-head"><span>CSS 9. Margen</span> <span>Propiedad: margin</span></div>
+                <div class="ficha-body">
+                    <p>Es el espacio que hay **fuera** de la caja, para separarla de otros elementos.</p>
+                    <div class="code-block">div {
+                        margin-top: 50px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c9')">Ver en el Folio</button>
+                    <div id="d9" class="demo" style="display:block">
+                        <div class="folio">
+                            <div style="background: red; color: white;">Caja A</div>
+                            <div style="background: blue; color: white; margin-top: 30px;">Caja B (separada por margen)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #000080;">
+                <div class="ficha-head"><span>CSS 10. Alineación</span> <span>Propiedad: text-align</span></div>
+                <div class="ficha-body">
+                    <p>Alinea el texto a la izquierda, derecha o al centro.</p>
+                    <div class="code-block">h1 {
+                        text-align: center;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c10')">Ver en el Folio</button>
+                    <div id="c10" class="demo">
+                        <div class="folio">
+                            <p style="text-align: right;">A la derecha</p>
+                            <p style="text-align: center;" class="highlight">En el centro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #ff7f50;">
+                <div class="ficha-head"><span>CSS 11. Bordes Redondeados</span> <span>border-radius</span></div>
+                <div class="ficha-body">
+                    <p>Convierte las esquinas cuadradas en curvas. Si pones 50%, haces un círculo perfecto.</p>
+                    <div class="code-block">.caja-curva {
+                        border-radius: 15px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c11')">Ver en el Folio</button>
+                    <div id="c11" class="demo">
+                        <div class="folio">
+                            <div class="highlight"
+                                style="border-radius: 20px; border: 2px solid #000; padding: 10px; background: #fff;">
+                                Esquinas
+                                redondeadas</div>
+                            <div class="highlight"
+                                style="border-radius: 50%; width: 50px; height: 50px; border: 2px solid #000; display: flex; align-items: center; justify-content: center; margin-top: 10px;">
+                                O</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #6a5acd;">
+                <div class="ficha-head"><span>CSS 12. Sombra de Caja</span> <span>box-shadow</span></div>
+                <div class="ficha-body">
+                    <p>Añade profundidad haciendo que los elementos parezcan flotar sobre la página.</p>
+                    <div class="code-block">.sombra {
+                        box-shadow: 5px 5px 10px rgba(0,0,0,0.3);
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c12')">Ver en el Folio</button>
+                    <div id="c12" class="demo">
+                        <div class="folio">
+                            <div class="highlight"
+                                style="box-shadow: 10px 10px 20px rgba(0,0,0,0.2); padding: 20px; background: white;">
+                                Tengo
+                                profundidad</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #20b2aa;">
+                <div class="ficha-head"><span>CSS 13. Transparencia</span> <span>opacity</span></div>
+                <div class="ficha-body">
+                    <p>Controla cuánto se puede ver a través de un objeto (0 es invisible, 1 es sólido).</p>
+                    <div class="code-block">.fantasma {
+                        opacity: 0.5;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c13')">Ver en el Folio</button>
+                    <div id="c13" class="demo">
+                        <div class="folio">
+                            <div class="highlight" style="opacity: 0.3; background: red; padding: 10px;">Casi invisible
+                                (0.3)
+                            </div>
+                            <div class="highlight"
+                                style="opacity: 0.8; background: red; padding: 10px; margin-top:5px;">
+                                Casi
+                                sólido (0.8)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #db7093;">
+                <div class="ficha-head"><span>CSS 14. Tipo de Puntero</span> <span>cursor</span></div>
+                <div class="ficha-body">
+                    <p>Cambia la forma del ratón cuando pasas por encima. Muy útil para indicar que algo es clickable.
+                    </p>
+                    <div class="code-block">.ayuda {
+                        cursor: help;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c14')">Ver en el Folio</button>
+                    <div id="c14" class="demo">
+                        <div class="folio">
+                            <p style="cursor: pointer; background: #eee; padding: 5px;" class="highlight">Pasa el ratón
+                                (Mano)
+                            </p>
+                            <p style="cursor: wait; background: #eee; padding: 5px; margin-top:5px;" class="highlight">
+                                Pasa
+                                el
+                                ratón (Cargando)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #4682b4;">
+                <div class="ficha-head"><span>CSS 15. Ocultar Elemento</span> <span>display: none</span></div>
+                <div class="ficha-body">
+                    <p>Elimina el elemento de la vista. Es lo que usamos para los menús que aparecen y desaparecen.</p>
+                    <div class="code-block">.oculto {
+                        display: none;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c15')">Ver en el Folio</button>
+                    <div id="c15" class="demo">
+                        <div class="folio">
+                            <p class="ghost-txt">Había un texto aquí, pero display:none lo quitó.</p>
+                            <div style="display: none;">No me puedes ver</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f4a460;">
+                <div class="ficha-head"><span>CSS 16. Estado Hover</span> <span>:hover</span></div>
+                <div class="ficha-body">
+                    <p>Es una "orden condicional": solo se aplica cuando el ratón está encima del objeto.</p>
+                    <div class="code-block">button:hover {
+                        background-color: black;
+                        color: white;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c16')">Ver en el Folio</button>
+                    <div id="c16" class="demo">
+                        <div class="folio">
+                            <button class="highlight" style="transition: 0.3s;"
+                                onmouseover="this.style.backgroundColor='black'; this.style.color='white'"
+                                onmouseout="this.style.backgroundColor=''; this.style.color=''">Pásame el ratón por
+                                encima</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #9acd32;">
+                <div class="ficha-head"><span>CSS 17. Decoración de Texto</span> <span>text-decoration</span></div>
+                <div class="ficha-body">
+                    <p>Sirve para subrayar, tachar o quitar la línea de los enlaces <code>&lt;a&gt;</code>.</p>
+                    <div class="code-block">a {
+                        text-decoration: none;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c17')">Ver en el Folio</button>
+                    <div id="c17" class="demo">
+                        <div class="folio">
+                            <p style="text-decoration: underline;" class="highlight">Subrayado</p>
+                            <p style="text-decoration: line-through;" class="highlight">Tachado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #8b4513;">
+                <div class="ficha-head"><span>CSS 18. Estilo de Lista</span> <span>list-style</span></div>
+                <div class="ficha-body">
+                    <p>Cambia o quita los puntos/números de las listas <code>&lt;ul&gt;</code> y
+                        <code>&lt;ol&gt;</code>.
+                    </p>
+                    <div class="code-block">ul {
+                        list-style: square;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c18')">Ver en el Folio</button>
+                    <div id="c18" class="demo">
+                        <div class="folio">
+                            <ul style="list-style: square;" class="highlight">
+                                <li>Cuadrados en vez de puntos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #008080;">
+                <div class="ficha-head"><span>CSS 19. Desbordamiento</span> <span>overflow</span></div>
+                <div class="ficha-body">
+                    <p>Controla qué pasa si el texto es más grande que su caja (poner scroll o cortarlo).</p>
+                    <div class="code-block">div {
+                        overflow: scroll;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c19')">Ver en el Folio</button>
+                    <div id="c19" class="demo">
+                        <div class="folio">
+                            <div style="width: 100px; height: 50px; overflow: scroll; border: 1px solid #000;"
+                                class="highlight">
+                                Mucho texto que no cabe y necesita scroll para leerse completo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff00ff;">
+                <div class="ficha-head"><span>CSS 20. Transiciones</span> <span>transition</span></div>
+                <div class="ficha-body">
+                    <p>Hace que los cambios (como el color en hover) no sean bruscos, sino suaves.</p>
+                    <div class="code-block">div {
+                        transition: all 0.5s ease;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c20')">Ver en el Folio</button>
+                    <div id="c20" class="demo">
+                        <div class="folio">
+                            <div class="highlight" style="padding: 10px; background: yellow; transition: 1s;"
+                                onmouseover="this.style.background='red'" onmouseout="this.style.background='yellow'">
+                                Cambio de color suave (1 segundo)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #483d8b;">
+                <div class="ficha-head"><span>CSS 21. Imagen de Fondo</span> <span>background-image</span></div>
+                <div class="ficha-body">
+                    <p>Pone una imagen detrás del contenido. Se usa <code>url()</code> para indicar la ruta.</p>
+                    <div class="code-block">div {
+                        background-image: url('paisaje.jpg');
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c21')">Ver en el Folio</button>
+                    <div id="c21" class="demo">
+                        <div class="folio"
+                            style="background-image: linear-gradient(45deg, #eee 25%, transparent 25%), linear-gradient(-45deg, #eee 25%, transparent 25%); background-size: 20px 20px;">
+                            <p class="highlight">Fondo con patrón de imagen/gradiente</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #2e8b57;">
+                <div class="ficha-head"><span>CSS 22. Ajuste de Fondo</span> <span>background-size: cover</span></div>
+                <div class="ficha-body">
+                    <p>Indica si la imagen debe estirarse para cubrir todo el espacio (cover) o encajar (contain).</p>
+                    <div class="code-block">div {
+                        background-size: cover;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c22')">Ver en el Folio</button>
+                    <div id="c22" class="demo">
+                        <div class="folio">
+                            <div style="width:100%; height:50px; background: #333; background-size: cover;"
+                                class="highlight">
+                                Imagen ajustada al 100%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #cd5c5c;">
+                <div class="ficha-head"><span>CSS 23. Grosor de Letra</span> <span>font-weight</span></div>
+                <div class="ficha-body">
+                    <p>Controla qué tan "gorda" es la letra. Valores: bold, normal, o números (100 a 900).</p>
+                    <div class="code-block">p {
+                        font-weight: 900;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c23')">Ver en el Folio</button>
+                    <div id="c23" class="demo">
+                        <div class="folio">
+                            <p style="font-weight: 100;">Grosor 100 (Fino)</p>
+                            <p style="font-weight: 900;" class="highlight">Grosor 900 (Extra Negro)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #5f9ea0;">
+                <div class="ficha-head"><span>CSS 24. Interlineado</span> <span>line-height</span></div>
+                <div class="ficha-body">
+                    <p>Controla el espacio vertical entre las líneas de un párrafo. Vital para la lectura.</p>
+                    <div class="code-block">p {
+                        line-height: 1.8;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c24')">Ver en el Folio</button>
+                    <div id="c24" class="demo">
+                        <div class="folio">
+                            <p style="line-height: 0.8; background: #eee; margin-bottom:10px;">Líneas muy
+                                juntas.<br>Segunda
+                                línea.</p>
+                            <p style="line-height: 2.5; background: #eee;" class="highlight">Líneas muy
+                                separadas.<br>Segunda
+                                línea.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>CSS 25. Espacio entre Letras</span> <span>letter-spacing</span></div>
+                <div class="ficha-body">
+                    <p>Aumenta o disminuye la distancia entre cada letra de una palabra.</p>
+                    <div class="code-block">h1 {
+                        letter-spacing: 5px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c25')">Ver en el Folio</button>
+                    <div id="c25" class="demo">
+                        <div class="folio">
+                            <p style="letter-spacing: -2px;">Letras pegadas</p>
+                            <p style="letter-spacing: 8px;" class="highlight">L E T R A S</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #0000ff;">
+                <div class="ficha-head"><span>CSS 26. Flotación</span> <span>float: left/right</span></div>
+                <div class="ficha-body">
+                    <p>Hace que un elemento flote a un lado y el texto lo rodee (como en un periódico).</p>
+                    <div class="code-block">img {
+                        float: left;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c26')">Ver en el Folio</button>
+                    <div id="c26" class="demo">
+                        <div class="folio" style="overflow: auto;">
+                            <div style="float: left; width: 50px; height: 50px; background: red; margin-right: 10px;">
+                                Caja
+                            </div>
+                            <p>Este texto rodea a la caja roja porque la caja tiene un float: left.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ffd700;">
+                <div class="ficha-head"><span>CSS 27. Posición Relativa</span> <span>position: relative</span></div>
+                <div class="ficha-body">
+                    <p>Permite mover un objeto desde su lugar original sin afectar a los demás.</p>
+                    <div class="code-block">div {
+                        position: relative;
+                        top: 10px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c27')">Ver en el Folio</button>
+                    <div id="c27" class="demo">
+                        <div class="folio">
+                            <div style="background: #ccc;">Caja base</div>
+                            <div style="position: relative; top: -15px; left: 30px; background: yellow;"
+                                class="highlight">
+                                Me
+                                moví de mi sitio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #00ff00;">
+                <div class="ficha-head"><span>CSS 28. Posición Fija</span> <span>position: fixed</span></div>
+                <div class="ficha-body">
+                    <p>El elemento se queda "pegado" en la pantalla aunque hagas scroll (como los menús).</p>
+                    <div class="code-block">nav {
+                        position: fixed;
+                        top: 0;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c28')">Ver en el Folio</button>
+                    <div id="c28" class="demo">
+                        <div class="folio">
+                            <div style="border: 2px solid green;" class="highlight">
+                                📌 Imagina que soy un menú que no se mueve al bajar.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff00ff;">
+                <div class="ficha-head"><span>CSS 29. Capas Profundidad</span> <span>z-index</span></div>
+                <div class="ficha-body">
+                    <p>Si dos cosas se tapan, el que tenga el <code>z-index</code> más alto sale delante.</p>
+                    <div class="code-block">.encima {
+                        z-index: 10;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c29')">Ver en el Folio</button>
+                    <div id="c29" class="demo">
+                        <div class="folio" style="position: relative; height: 60px;">
+                            <div style="position: absolute; z-index: 1; background: red; width: 40px; height: 40px;">1
+                            </div>
+                            <div
+                                style="position: absolute; z-index: 2; background: blue; width: 40px; height: 40px; top: 10px; left: 10px; color: white;">
+                                2</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff0000;">
+                <div class="ficha-head"><span>CSS 30. Prohibido</span> <span>cursor: not-allowed</span></div>
+                <div class="ficha-body">
+                    <p>Indica visualmente que un botón o campo está desactivado.</p>
+                    <div class="code-block">button:disabled {
+                        cursor: not-allowed;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c30')">Ver en el Folio</button>
+                    <div id="c30" class="demo">
+                        <div class="folio">
+                            <button style="cursor: not-allowed; opacity: 0.5;" class="highlight">No puedes clicar
+                                aquí</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>CSS 31. El Activador Flex</span> <span>display: flex</span></div>
+                <div class="ficha-body">
+                    <p>Es el "interruptor" que convierte a un contenedor en un organizador inteligente. Sus hijos ahora
+                        pueden
+                        ponerse en fila.</p>
+                    <div class="code-block">.contenedor {
+                        display: flex;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c31')">Ver en el Folio</button>
+                    <div id="c31" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; gap: 10px;" class="highlight">
+                                <div style="background:red; padding:5px;">Hijo 1</div>
+                                <div style="background:blue; padding:5px; color:white;">Hijo 2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #32cd32;">
+                <div class="ficha-head"><span>CSS 32. Dirección</span> <span>flex-direction</span></div>
+                <div class="ficha-body">
+                    <p>Decide si los elementos se alinean en horizontal (row) o en vertical (column).</p>
+                    <div class="code-block">.lista {
+                        display: flex;
+                        flex-direction: column;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c32')">Ver en el Folio</button>
+                    <div id="c32" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; flex-direction: column; gap: 5px;" class="highlight">
+                                <div style="background:#ddd;">Fila 1</div>
+                                <div style="background:#ddd;">Fila 2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #1e90ff;">
+                <div class="ficha-head"><span>CSS 33. Alineación Horizontal</span> <span>justify-content</span></div>
+                <div class="ficha-body">
+                    <p>Distribuye el espacio sobrante entre los elementos (al principio, al final, al centro o
+                        repartido).
+                    </p>
+                    <div class="code-block">.fila {
+                        display: flex;
+                        justify-content: space-between;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c33')">Ver en el Folio</button>
+                    <div id="c33" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; justify-content: space-between; background: #eee;"
+                                class="highlight">
+                                <span>Inicio</span>
+                                <span>Final</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff1493;">
+                <div class="ficha-head"><span>CSS 34. Alineación Vertical</span> <span>align-items</span></div>
+                <div class="ficha-body">
+                    <p>Alinea los elementos de arriba a abajo dentro de su fila.</p>
+                    <div class="code-block">.contenedor-alto {
+                        display: flex;
+                        align-items: center;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c34')">Ver en el Folio</button>
+                    <div id="c34" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; align-items: center; height: 60px; background: #eee;"
+                                class="highlight">
+                                <div style="background:black; color:white; padding:5px;">Centrado verticalmente</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ffa500;">
+                <div class="ficha-head"><span>CSS 35. Espaciado Flex</span> <span>gap</span></div>
+                <div class="ficha-body">
+                    <p>La forma más moderna de separar elementos en Flexbox sin usar márgenes complicados.</p>
+                    <div class="code-block">.grid {
+                        display: flex;
+                        gap: 20px;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c35')">Ver en el Folio</button>
+                    <div id="c35" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; gap: 25px;" class="highlight">
+                                <div style="border:1px solid red;">Item</div>
+                                <div style="border:1px solid red;">Item</div>
+                                <div style="border:1px solid red;">Item</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #8a2be2;">
+                <div class="ficha-head"><span>CSS 36. Salto de Línea</span> <span>flex-wrap</span></div>
+                <div class="ficha-body">
+                    <p>Si los elementos no caben en una fila, permite que salten a la siguiente automáticamente.</p>
+                    <div class="code-block">.galeria {
+                        display: flex;
+                        flex-wrap: wrap;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c36')">Ver en el Folio</button>
+                    <div id="c36" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; flex-wrap: wrap; gap: 5px; width: 100px; border: 1px solid #000;"
+                                class="highlight">
+                                <div style="width:40px; background:blue;">1</div>
+                                <div style="width:40px; background:red;">2</div>
+                                <div style="width:40px; background:green;">3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #00ced1;">
+                <div class="ficha-head"><span>CSS 37. Crecimiento</span> <span>flex-grow</span></div>
+                <div class="ficha-body">
+                    <p>Le dice a un elemento que "se estire" para ocupar todo el espacio libre que quede.</p>
+                    <div class="code-block">.buscador {
+                        flex-grow: 1;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c37')">Ver en el Folio</button>
+                    <div id="c37" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; gap: 5px;">
+                                <div style="background:gray;">Logo</div>
+                                <div style="flex-grow: 1; background: yellow;" class="highlight">Buscador (Estirado)
+                                </div>
+                                <div style="background:gray;">Login</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>CSS 38. Cambiar Orden</span> <span>order</span></div>
+                <div class="ficha-body">
+                    <p>Cambia el orden visual de los elementos sin tocar el código HTML. ¡Magia!</p>
+                    <div class="code-block">.primero {
+                        order: -1;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c38')">Ver en el Folio</button>
+                    <div id="c38" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; gap: 10px;">
+                                <div style="order: 2;">A (segundo)</div>
+                                <div style="order: 1; background: yellow;" class="highlight">B (primero)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #4b0082;">
+                <div class="ficha-head"><span>CSS 39. Alineación Individual</span> <span>align-self</span></div>
+                <div class="ficha-body">
+                    <p>Permite que un solo hijo rompa la regla general y se alinee distinto a sus hermanos.</p>
+                    <div class="code-block">.rebelde {
+                        align-self: flex-end;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c39')">Ver en el Folio</button>
+                    <div id="c39" class="demo">
+                        <div class="folio">
+                            <div style="display: flex; align-items: flex-start; height: 60px; background: #eee;">
+                                <div>Normal</div>
+                                <div style="align-self: flex-end; background: yellow;" class="highlight">Rebelde abajo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #2e8b57;">
+                <div class="ficha-head"><span>CSS 40. Abreviatura Flex</span> <span>flex: 1 0 auto</span></div>
+                <div class="ficha-body">
+                    <p>Es un resumen de 3 propiedades: crecer, encoger y tamaño base. Muy común en plantillas.</p>
+                    <div class="code-block">.columna {
+                        flex: 1;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c40')">Ver en el Folio</button>
+                    <div id="c40" class="demo">
+                        <div class="folio">
+                            <div style="display: flex;">
+                                <div style="flex: 1; border: 1px solid blue;">Columna 1/2</div>
+                                <div style="flex: 1; border: 1px solid blue;">Columna 2/2</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>CSS 41. La Rejilla</span> <span>display: grid</span></div>
+                <div class="ficha-body">
+                    <p>Es el hermano mayor de Flexbox. Permite crear filas y columnas al mismo tiempo como una hoja de
+                        Excel.
+                    </p>
+                    <div class="code-block">.contenedor {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c41')">Ver en el Folio</button>
+                    <div id="c41" class="demo">
+                        <div class="folio">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px;" class="highlight">
+                                <div style="background:red;">Col 1</div>
+                                <div style="background:blue; color:white;">Col 2</div>
+                                <div style="background:green;">Col 3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #32cd32;">
+                <div class="ficha-head"><span>CSS 42. Variables</span> <span>--mi-color</span></div>
+                <div class="ficha-body">
+                    <p>Permite guardar un valor (como un color) y usarlo en toda la web. Si cambias la variable, todo
+                        cambia
+                        a
+                        la vez.</p>
+                    <div class="code-block">:root {
+                        --principal: #ffcc00;
+                        }
+                        h1 { color: var(--principal); }</div>
+                    <button class="btn-ver" onclick="toggle('c42')">Ver en el Folio</button>
+                    <div id="c42" class="demo">
+                        <div class="folio">
+                            <p style="color: var(--accent);" class="highlight">Uso el color de la variable --accent de
+                                tu
+                                manual.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #1e90ff;">
+                <div class="ficha-head"><span>CSS 43. Adaptación Móvil</span> <span>@media</span></div>
+                <div class="ficha-body">
+                    <p>Es la base del "Responsive Design". Permite cambiar el diseño dependiendo de si la pantalla es
+                        pequeña
+                        (móvil) o grande.</p>
+                    <div class="code-block">@media (max-width: 600px) {
+                        body { background: black; }
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c43')">Ver Representación</button>
+                    <div id="c43" class="demo">
+                        <div class="folio">
+                            <p class="highlight">📱 Si encoges la ventana del navegador, este código detectaría el
+                                cambio.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff1493;">
+                <div class="ficha-head"><span>CSS 44. Proporción</span> <span>aspect-ratio</span></div>
+                <div class="ficha-body">
+                    <p>Mantiene la forma de un elemento (ej: 16/9 para video o 1/1 para fotos cuadradas) sin importar el
+                        tamaño.
+                    </p>
+                    <div class="code-block">img {
+                        aspect-ratio: 16 / 9;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c44')">Ver en el Folio</button>
+                    <div id="c44" class="demo">
+                        <div class="folio">
+                            <div style="width: 100px; aspect-ratio: 1/1; background: #ddd; border: 1px solid #000;"
+                                class="highlight">Cuadrado perfecto</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ffa500;">
+                <div class="ficha-head"><span>CSS 45. Filtros Visuales</span> <span>filter: blur / grayscale</span>
+                </div>
+                <div class="ficha-body">
+                    <p>Aplica efectos estilo Instagram (desenfoque, blanco y negro, brillo) directamente con código.</p>
+                    <div class="code-block">img {
+                        filter: blur(5px) grayscale(100%);
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c45')">Ver en el Folio</button>
+                    <div id="c45" class="demo">
+                        <div class="folio">
+                            <span style="filter: blur(2px);" class="highlight">Texto desenfocado</span>
+                            <span style="filter: invert(100%); background: white;" class="highlight">Colores
+                                invertidos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #8a2be2;">
+                <div class="ficha-head"><span>CSS 46. Cálculos Matemáticos</span> <span>calc()</span></div>
+                <div class="ficha-body">
+                    <p>Permite mezclar unidades (ej: el 100% de la pantalla menos 20 píxeles).</p>
+                    <div class="code-block">div {
+                        width: calc(100% - 50px);
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c46')">Ver en el Folio</button>
+                    <div id="c46" class="demo">
+                        <div class="folio">
+                            <div style="width: calc(100% - 40px); background: #eee; border: 1px solid #000;"
+                                class="highlight">
+                                Tengo el ancho total menos 40px exactos.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #00ced1;">
+                <div class="ficha-head"><span>CSS 47. Ajuste de Imagen</span> <span>object-fit: cover</span></div>
+                <div class="ficha-body">
+                    <p>Evita que las imágenes se vean "estiradas" o deformadas cuando las metes en cajas de distinto
+                        tamaño.
+                    </p>
+                    <div class="code-block">img {
+                        object-fit: cover;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c47')">Ver en el Folio</button>
+                    <div id="c47" class="demo">
+                        <div class="folio">
+                            <div style="width: 50px; height: 100px; background: #333; overflow: hidden;"
+                                class="highlight">
+                                [Foto sin deformar]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #ff4500;">
+                <div class="ficha-head"><span>CSS 48. Degradados</span> <span>linear-gradient</span></div>
+                <div class="ficha-body">
+                    <p>Crea fondos que pasan de un color a otro suavemente.</p>
+                    <div class="code-block">div {
+                        background: linear-gradient(to right, red, yellow);
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c48')">Ver en el Folio</button>
+                    <div id="c48" class="demo">
+                        <div class="folio">
+                            <div style="height: 50px; background: linear-gradient(90deg, #58a6ff, #ccff00);"
+                                class="highlight">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #4b0082;">
+                <div class="ficha-head"><span>CSS 49. Control de Tamaño</span> <span>box-sizing: border-box</span></div>
+                <div class="ficha-body">
+                    <p>Es el "truco" de los profesionales: hace que el padding y el borde no aumenten el tamaño total de
+                        la
+                        caja.</p>
+                    <div class="code-block">* {
+                        box-sizing: border-box;
+                        }</div>
+                    <button class="btn-ver" onclick="toggle('c49')">Ver Representación</button>
+                    <div id="c49" class="demo">
+                        <div class="folio">
+                            <p class="highlight">✅ Con esto, una caja de 100px mide 100px SIEMPRE.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #2e8b57;">
+                <div class="ficha-head"><span>CSS 50. Google Fonts</span> <span>@import</span></div>
+                <div class="ficha-body">
+                    <p>Permite importar fuentes profesionales desde internet para que tu web no use siempre "Arial".</p>
+                    <div class="code-block">@import url('https://fonts.googleapis.com...');</div>
+                    <button class="btn-ver" onclick="toggle('c50')">Ver en el Folio</button>
+                    <div id="c50" class="demo">
+                        <div class="folio">
+                            <p style="font-family: 'Courier New', Courier, monospace;" class="highlight">
+                                🥇 ¡Felicidades! Has terminado el Manual Maestro de HTML y CSS.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>
+                        <h2 id="seccion-js">JS 1. El Contenedor</h2>
+                    </span> <span>&lt;script&gt;</span></div>
+                <div class="ficha-body">
+                    <p>Es el lugar donde vive el código JavaScript. Puede estar dentro del HTML o en un archivo .js
+                        separado.
+                    </p>
+                    <div class="code-block">&lt;script&gt;
+                        console.log("Hola Mundo");
+                        &lt;/script&gt;</div>
+                    <button class="btn-ver" onclick="console.log('¡Hola desde la consola!')">Probar en Consola</button>
+                    <div class="tips">💡 Abre la consola del navegador (F12) para ver el resultado.</div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 2. Variables</span> <span>let</span></div>
+                <div class="ficha-body">
+                    <p>Una variable es una "caja" donde guardas un dato que puede cambiar más tarde.</p>
+                    <div class="code-block">let nombre = "Admin";
+                        nombre = "Hacker";</div>
+                    <button class="btn-ver" onclick="n='Admin'; alert('Variable guardada: ' + n)">Ver Ejemplo</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 3. Constantes</span> <span>const</span></div>
+                <div class="ficha-body">
+                    <p>Es como una variable, pero su valor **no puede cambiar**. Se usa para datos fijos o de seguridad.
+                    </p>
+                    <div class="code-block">const PI = 3.1416;</div>
+                    <button class="btn-ver" onclick="alert('La constante PI siempre es 3.1416')">Ver Ejemplo</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 4. Datos</span> <span>Strings, Numbers, Booleans</span></div>
+                <div class="ficha-body">
+                    <p>Los datos pueden ser texto ("Hola"), números (25) o verdadero/falso (true/false).</p>
+                    <div class="code-block">let texto = "Manual";
+                        let numero = 100;
+                        let esSeguro = true;</div>
+                    <button class="btn-ver" onclick="alert('Texto, Números y Booleanos son los pilares.')">Saber
+                        más</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 5. Depuración</span> <span>console.log()</span></div>
+                <div class="ficha-body">
+                    <p>Es la herramienta favorita del programador. Imprime mensajes en la consola oculta del navegador
+                        para
+                        revisar errores.</p>
+                    <div class="code-block">console.log("Revisando el sistema...");</div>
+                    <button class="btn-ver" onclick="console.log('Mensaje enviado a la consola F12')">Enviar a
+                        Consola</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 6. Alertas</span> <span>alert()</span></div>
+                <div class="ficha-body">
+                    <p>Muestra una ventana emergente con un mensaje. Es la forma más básica de interactuar con el
+                        usuario.
+                    </p>
+                    <div class="code-block">alert("¡Acceso denegado!");</div>
+                    <button class="btn-ver" onclick="alert('¡Esto es una alerta de JS!')">Lanzar Alerta</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 7. Cálculos</span> <span>+, -, *, /</span></div>
+                <div class="ficha-body">
+                    <p>JavaScript puede hacer cálculos instantáneos como una calculadora.</p>
+                    <div class="code-block">let total = 10 + 5; // 15</div>
+                    <button class="btn-ver" onclick="alert('5 x 5 es: ' + (5*5))">Calcular 5x5</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 8. Funciones</span> <span>function</span></div>
+                <div class="ficha-body">
+                    <p>Es un bloque de código que guarda una acción para usarla muchas veces cuando la necesites.</p>
+                    <div class="code-block">function saludar() {
+                        alert("Hola");
+                        }</div>
+                    <button class="btn-ver"
+                        onclick="function f(){alert('Acción ejecutada desde la función')}; f()">Ejecutar
+                        Función</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 9. Evento Clic</span> <span>onclick</span></div>
+                <div class="ficha-body">
+                    <p>Es el puente entre el HTML y el JS. Dice: "Cuando el usuario haga clic aquí, ejecuta este
+                        código".
+                    </p>
+                    <div class="code-block">&lt;button onclick="miFuncion()"&gt;</div>
+                    <button class="btn-ver" onclick="this.innerHTML='¡Me has clicado!'">Haz Clic Aquí</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 10. Decisiones</span> <span>if / else</span></div>
+                <div class="ficha-body">
+                    <p>Permite que el código tome caminos distintos. "Si pasa A, haz esto; si no, haz aquello".</p>
+                    <div class="code-block">if (edad >= 18) {
+                        alert("Puedes entrar");
+                        }</div>
+                    <button class="btn-ver"
+                        onclick="let p=prompt('Dime un número'); if(p>10){alert('Es mayor que 10')}else{alert('Es 10 o menor')}">Probar
+                        Lógica</button>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 11. El Gancho</span> <span>getElementById()</span></div>
+                <div class="ficha-body">
+                    <p>Es la forma más rápida de "atrapar" un elemento de tu HTML usando su ID único (visto en el paso
+                        31).
+                    </p>
+                    <div class="code-block">let titulo = document.getElementById("miId");</div>
+                    <button class="btn-ver"
+                        onclick="let e=document.getElementById('demo-11'); e.style.color='red';">Cambiar
+                        mi
+                        color</button>
+                    <div id="demo-11" class="demo" style="display:block">Soy un texto con ID</div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 12. Cambiar Contenido</span> <span>innerHTML</span></div>
+                <div class="ficha-body">
+                    <p>Permite cambiar el texto o el HTML que hay dentro de un elemento.</p>
+                    <div class="code-block">elemento.innerHTML = "¡Nuevo texto!";</div>
+                    <button class="btn-ver"
+                        onclick="document.getElementById('demo-12').innerHTML='<b>¡Texto Cambiado!</b>'">Hackear
+                        texto</button>
+                    <div id="demo-12" class="demo" style="display:block">Texto original</div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 13. Cambiar Estilo</span> <span>.style</span></div>
+                <div class="ficha-body">
+                    <p>JavaScript puede modificar cualquier propiedad CSS de un elemento al instante.</p>
+                    <div class="code-block">caja.style.backgroundColor = "blue";</div>
+                    <button class="btn-ver"
+                        onclick="let d=document.getElementById('demo-13'); d.style.borderRadius='50%'; d.style.width='50px';">Hacer
+                        círculo</button>
+                    <div id="demo-13" class="demo"
+                        style="display:block; width:100px; height:50px; background:orange; transition: 0.5s;">Caja</div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 14. El Selector Moderno</span> <span>querySelector()</span></div>
+                <div class="ficha-body">
+                    <p>Es más potente que getElementById. Te permite buscar elementos usando la misma sintaxis que en
+                        CSS
+                        (por
+                        clase, por etiqueta, etc).</p>
+                    <div class="code-block">let item = document.querySelector(".mi-clase");</div>
+                    <button class="btn-ver" onclick="document.querySelector('#demo-14').style.fontWeight='bold'">Poner
+                        negrita</button>
+                    <div id="demo-14" class="demo" style="display:block">Búscame con querySelector</div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 15. El Escucha</span> <span>addEventListener()</span></div>
+                <div class="ficha-body">
+                    <p>La forma profesional de manejar eventos. En lugar de poner "onclick" en el HTML, le dices al JS
+                        que
+                        "escuche" el clic.</p>
+                    <div class="code-block">boton.addEventListener("click", () => { ... });</div>
+                    <button id="btn-15" class="btn-ver">Clic con Listener</button>
+                    <script>
+                        document.getElementById('btn-15').addEventListener('click', () => alert('¡Evento detectado profesionalmente!'));
+                    </script>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 16. Leer Inputs</span> <span>.value</span></div>
+                <div class="ficha-body">
+                    <p>Sirve para obtener lo que el usuario ha escrito dentro de una caja de texto (input).</p>
+                    <div class="code-block">let datos = miInput.value;</div>
+                    <input type="text" id="input-16" placeholder="Escribe algo...">
+                    <button class="btn-ver"
+                        onclick="alert('Escribiste: ' + document.getElementById('input-16').value)">Leer
+                        input</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 17. Interruptor de Clases</span> <span>classList.toggle()</span></div>
+                <div class="ficha-body">
+                    <p>Añade una clase si no la tiene, o la quita si ya la tiene. Es perfecto para hacer "Modos
+                        Oscuros".
+                    </p>
+                    <div class="code-block">caja.classList.toggle("oscuro");</div>
+                    <button class="btn-ver"
+                        onclick="document.getElementById('demo-17').classList.toggle('highlight')">Prender/Apagar
+                        resaltado</button>
+                    <div id="demo-17" class="demo" style="display:block">Soy una caja de prueba</div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 18. El Temporizador</span> <span>setTimeout()</span></div>
+                <div class="ficha-body">
+                    <p>Ejecuta una acción después de que pase un tiempo determinado (en milisegundos).</p>
+                    <div class="code-block">setTimeout(() => { alert("Fin"); }, 2000);</div>
+                    <button class="btn-ver" onclick="setTimeout(() => alert('Han pasado 2 segundos'), 2000)">Esperar 2
+                        seg.</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 19. Crear Vida</span> <span>createElement()</span></div>
+                <div class="ficha-body">
+                    <p>JavaScript puede crear nuevas etiquetas HTML desde cero y meterlas en la página.</p>
+                    <div class="code-block">let p = document.createElement("p");</div>
+                    <button class="btn-ver"
+                        onclick="let n=document.createElement('p'); n.innerText='¡Soy nuevo!'; document.getElementById('contenedor-19').appendChild(n);">Crear
+                        Párrafo</button>
+                    <div id="contenedor-19" class="demo" style="display:block; border:1px dashed #ccc;">Contenedor:
+                    </div>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 20. Borrar</span> <span>remove()</span></div>
+                <div class="ficha-body">
+                    <p>Permite eliminar un elemento del mapa de la página para siempre.</p>
+                    <div class="code-block">elemento.remove();</div>
+                    <button class="btn-ver" onclick="document.getElementById('demo-20').remove()">Borrar la caja
+                        roja</button>
+                    <div id="demo-20" class="demo" style="display:block; background:red; color:white;">¡Bórrame!</div>
+                </div>
+            </div>
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 21. Listas</span> <span>Arrays [ ]</span></div>
+                <div class="ficha-body">
+                    <p>Un Array es una variable que puede guardar muchos valores a la vez, ordenados por posición
+                        (empezando
+                        desde 0).</p>
+                    <div class="code-block">let frutas = ["Manzana", "Pera", "Plátano"];</div>
+                    <button class="btn-ver"
+                        onclick="let f=['Manzana','Pera']; alert('La primera fruta es: ' + f[0])">Ver
+                        Posición 0</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 22. Añadir a Lista</span> <span>.push()</span></div>
+                <div class="ficha-body">
+                    <p>Agrega un nuevo elemento al final de un Array.</p>
+                    <div class="code-block">frutas.push("Naranja");</div>
+                    <button class="btn-ver" onclick="let l=['A','B']; l.push('C'); alert('Nueva lista: ' + l)">Añadir
+                        'C'</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 23. Contar Elementos</span> <span>.length</span></div>
+                <div class="ficha-body">
+                    <p>Te dice cuántos elementos tiene una lista o cuántas letras tiene un texto.</p>
+                    <div class="code-block">console.log(frutas.length);</div>
+                    <button class="btn-ver"
+                        onclick="let t='Hola'; alert('La palabra Hola tiene ' + t.length + ' letras')">Contar
+                        letras</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 24. Objetos</span> <span>{ }</span></div>
+                <div class="ficha-body">
+                    <p>Guardan datos usando pares de "Clave: Valor". Ideal para describir algo complejo.</p>
+                    <div class="code-block">let user = { nombre: "Leo", nivel: 5 };</div>
+                    <button class="btn-ver"
+                        onclick="let u={n:'Leo', e:25}; alert('Nombre: ' + u.n + ' - Edad: ' + u.e)">Leer
+                        Objeto</button>
+                </div>
+            </div>
+
+            <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                <div class="ficha-head"><span>JS 25. El Ciclo Clásico</span> <span>for()</span></div>
+                <div class="ficha-body">
+                    <p>Repite un bloque de código un número específico de veces.</p>
+                    <div class="code-block">for(let i=0; i < 5; i++) { ... }</div>
+                            <button class="btn-ver"
+                                onclick="let res=''; for(let i=1; i<=3; i++) res+=i+'... '; alert(res)">Contar hasta
+                                3</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 26. Recorrer Listas</span> <span>.forEach()</span></div>
+                    <div class="ficha-body">
+                        <p>Es un bucle especial para listas. Ejecuta una función por cada elemento que haya en el Array.
+                        </p>
+                        <div class="code-block">frutas.forEach(f => console.log(f));</div>
+                        <button class="btn-ver"
+                            onclick="let d=['X','Y','Z']; d.forEach(v => alert('Elemento: ' + v))">Recorrer
+                            X, Y, Z</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 27. Azar</span> <span>Math.random()</span></div>
+                    <div class="ficha-body">
+                        <p>Genera un número aleatorio entre 0 y 1. Se usa para juegos o sorteos.</p>
+                        <div class="code-block">let azar = Math.random() * 10;</div>
+                        <button class="btn-ver"
+                            onclick="alert('Número al azar: ' + Math.floor(Math.random()*100))">Número
+                            1-100</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 28. Igualdad Estricta</span> <span>===</span></div>
+                    <div class="ficha-body">
+                        <p>Compara si dos cosas son exactamente iguales en valor y tipo de dato. Es más seguro que
+                            <code>==</code>.
+                        </p>
+                        <div class="code-block">if (pass === "1234") { ... }</div>
+                        <button class="btn-ver" onclick="alert('¿5 es igual a texto 5? ' + (5 === '5'))">Probar (5 ===
+                            '5')</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 29. Texto Moderno</span> <span>`Backticks`</span></div>
+                    <div class="ficha-body">
+                        <p>Permite mezclar texto y variables de forma fácil usando <code>${variable}</code>.</p>
+                        <div class="code-block">let saludo = `Hola ${nombre}`;</div>
+                        <button class="btn-ver" onclick="let n='Hacker'; alert(`Bienvenido, ${n}`)">Ver Saludo</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 30. Frenar Acción</span> <span>preventDefault()</span></div>
+                    <div class="ficha-body">
+                        <p>Detiene el comportamiento normal del navegador (como evitar que un formulario se envíe y
+                            recargue
+                            la
+                            página).</p>
+                        <div class="code-block">event.preventDefault();</div>
+                        <button class="btn-ver"
+                            onclick="alert('Esta función se usa dentro de eventos para controlar el flujo.')">Explicación</button>
+                    </div>
+                </div>
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 31. Funciones de Flecha</span> <span>() => { }</span></div>
+                    <div class="ficha-body">
+                        <p>Es la forma moderna y corta de escribir funciones en JavaScript.</p>
+                        <div class="code-block">const saludar = () => alert("Hola");</div>
+                        <button class="btn-ver" onclick="const f=()=>alert('Flecha ejecutada'); f()">Probar
+                            Flecha</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 32. Guardar en Memoria</span> <span>localStorage</span></div>
+                    <div class="ficha-body">
+                        <p>Guarda un dato en el navegador del usuario. No se borra aunque cierres la ventana.</p>
+                        <div class="code-block">localStorage.setItem("usuario", "Leo");</div>
+                        <button class="btn-ver"
+                            onclick="localStorage.setItem('test', 'Guardado!'); alert('Dato guardado en el navegador')">Guardar
+                            Dato</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 33. Recuperar Memoria</span> <span>.getItem()</span></div>
+                    <div class="ficha-body">
+                        <p>Recupera el dato que guardaste anteriormente en el localStorage.</p>
+                        <div class="code-block">let user = localStorage.getItem("usuario");</div>
+                        <button class="btn-ver"
+                            onclick="alert('Dato recuperado: ' + localStorage.getItem('test'))">Recuperar
+                            Dato</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 34. Convertir a Texto</span> <span>JSON.stringify()</span></div>
+                    <div class="ficha-body">
+                        <p>El localStorage solo guarda texto. Si quieres guardar un objeto o lista, debes convertirlo a
+                            "texto
+                            JSON".</p>
+                        <div class="code-block">let texto = JSON.stringify({id: 1});</div>
+                        <button class="btn-ver"
+                            onclick="let obj={a:1}; alert('Objeto convertido: ' + JSON.stringify(obj))">Ver
+                            JSON</button>
+                    </div>
+                </div>
+
+                <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                    <div class="ficha-head"><span>JS 35. Convertir a Objeto</span> <span>JSON.parse()</span></div>
+                    <div class="ficha-body">
+                        <p>Es el proceso inverso: convierte un texto JSON que recuperaste de la memoria en un objeto
+                            real de
+                            nuevo.</p>
+                        <div class="code-block">let obj = JSON.parse(textoGuardado);</div>
+                        <button class="btn-ver" onclick="let txt={id:1}; alert('Objeto: ' + JSON.stringify(txt))" </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 36. Manejo de Errores</span> <span>try / catch</span></div>
+                        <div class="ficha-body">
+                            <p>Intenta ejecutar un código (try) y, si falla, ejecuta el bloque de error (catch) en lugar
+                                de
+                                detener
+                                la web.</p>
+                            <div class="code-block">try { funcionInexistente(); }
+                                catch(e) { console.log("Error!"); }</div>
+                            <button class="btn-ver"
+                                onclick="try{llamarAFuncionQueNoExiste()}catch(e){alert('Error capturado: ' + e.message)}">Simular
+                                Error</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 37. Conectar Internet</span> <span>fetch()</span></div>
+                        <div class="ficha-body">
+                            <p>Permite pedir datos a otros servidores o APIs de internet (como el clima o precios de
+                                crypto).
+                            </p>
+                            <div class="code-block">fetch('https://api.com/datos')...</div>
+                            <button class="btn-ver"
+                                onclick="alert('Esta es la base para conectar tu web con el mundo exterior.')">Explicación</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 38. Espera Asíncrona</span> <span>async / await</span></div>
+                        <div class="ficha-body">
+                            <p>Le dice al código que espere a que una respuesta de internet llegue antes de seguir con
+                                el
+                                siguiente
+                                paso.</p>
+                            <div class="code-block">async function datos() {
+                                await fetch(...);
+                                }</div>
+                            <button class="btn-ver"
+                                onclick="alert('Se usa para que la web no se congele mientras carga datos externos.')">Saber
+                                más</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 39. El Reloj</span> <span>setInterval()</span></div>
+                        <div class="ficha-body">
+                            <p>Repite una acción cada X tiempo para siempre (o hasta que lo detengas).</p>
+                            <div class="code-block">setInterval(() => { alert("Tick"); }, 5000);</div>
+                            <button class="btn-ver"
+                                onclick="let c=0; let i=setInterval(()=>{c++; if(c<=3){alert('Repetición '+c)}else{clearInterval(i)}}, 1000)">Repetir
+                                3 veces</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 40. Detener Reloj</span> <span>clearInterval()</span></div>
+                        <div class="ficha-body">
+                            <p>Sirve para parar un proceso que iniciaste con <code>setInterval</code>.</p>
+                            <div class="code-block">clearInterval(miReloj);</div>
+                            <button class="btn-ver"
+                                onclick="alert('Se usa para frenar cronómetros o procesos infinitos.')">Explicación</button>
+                        </div>
+                    </div>
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 41. Desestructurar Listas</span> <span>[a, b] = lista</span>
+                        </div>
+                        <div class="ficha-body">
+                            <p>Permite extraer valores de una lista y guardarlos en variables individuales en una sola
+                                línea.
+                            </p>
+                            <div class="code-block">const [x, y] = [10, 20];</div>
+                            <button class="btn-ver" onclick="[a, b] = ['Oro', 'Plata']; alert('Ganador: ' + a)">Extraer
+                                Oro</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 42. Desestructurar Objetos</span> <span>{nombre} = user</span>
+                        </div>
+                        <div class="ficha-body">
+                            <p>Extrae propiedades de un objeto directamente por su nombre de clave.</p>
+                            <div class="code-block">const { precio } = producto;</div>
+                            <button class="btn-ver"
+                                onclick="const {n} = {n:'Leo', id:1}; alert('Nombre extraído: ' + n)">Extraer
+                                'n'</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 43. Operador de Expansión</span> <span>... (puntos)</span>
+                        </div>
+                        <div class="ficha-body">
+                            <p>Sirve para copiar o combinar listas y objetos rápidamente sin modificar los originales.
+                            </p>
+                            <div class="code-block">let nuevaLista = [...viejaLista, "Nuevo"];</div>
+                            <button class="btn-ver"
+                                onclick="let a=[1,2]; let b=[...a, 3]; alert('Lista combinada: ' + b)">Combinar
+                                1,2 + 3</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 44. Condicional Corto</span> <span>? :</span></div>
+                        <div class="ficha-body">
+                            <p>Es una forma ultra-rápida de escribir un <code>if/else</code> en una sola línea.</p>
+                            <div class="code-block">let estado = (puntos > 50) ? "Ganas" : "Pierdes";</div>
+                            <button class="btn-ver"
+                                onclick="let e=confirm('¿Eres admin?'); alert(e ? 'Bienvenido Jefe' : 'Acceso Denegado')">Probar
+                                Ternario</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 45. Exportar Código</span> <span>export</span></div>
+                        <div class="ficha-body">
+                            <p>Permite enviar una función o variable de un archivo JS a otro para mantener todo
+                                organizado.</p>
+                            <div class="code-block">export const login = () => { ... };</div>
+                            <button class="btn-ver"
+                                onclick="alert('Se usa para dividir tu código en muchos archivos pequeños.')">Explicación</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 46. Importar Código</span> <span>import</span></div>
+                        <div class="ficha-body">
+                            <p>Trae el código que exportaste desde otro archivo.</p>
+                            <div class="code-block">import { login } from './auth.js';</div>
+                            <button class="btn-ver"
+                                onclick="alert('Es la base de los frameworks modernos como React o Vue.')">Explicación</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 47. Modo Estricto</span> <span>"use strict"</span></div>
+                        <div class="ficha-body">
+                            <p>Obliga al navegador a ser más exigente. Evita que uses variables no declaradas o cometas
+                                errores
+                                "tontos".</p>
+                            <div class="code-block">"use strict";
+                                x = 10; // Error porque no pusiste 'let'</div>
+                            <button class="btn-ver"
+                                onclick="alert('Activa el modo vigilante de JavaScript para evitar errores de seguridad.')">Explicación</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 48. Transformar Listas</span> <span>.map()</span></div>
+                        <div class="ficha-body">
+                            <p>Crea una nueva lista transformando cada elemento de la lista original. Muy usado para
+                                mostrar
+                                datos
+                                en pantalla.</p>
+                            <div class="code-block">let dobles = nums.map(n => n * 2);</div>
+                            <button class="btn-ver"
+                                onclick="let n=[1,2,3]; alert('Original: 1,2,3 - Dobles: ' + n.map(x=>x*2))">Doblar
+                                números</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 49. Filtrar Listas</span> <span>.filter()</span></div>
+                        <div class="ficha-body">
+                            <p>Crea una lista nueva solo con los elementos que cumplan una condición (ej: solo los
+                                mayores de
+                                edad).
+                            </p>
+                            <div class="code-block">let pro = usuarios.filter(u => u.nivel > 10);</div>
+                            <button class="btn-ver"
+                                onclick="let n=[10,20,30]; alert('Mayores de 15: ' + n.filter(x=>x>15))">Filtrar
+                                > 15</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f7df1e;">
+                        <div class="ficha-head"><span>JS 50. Conclusión</span> <span>¡Manual Completo!</span></div>
+                        <div class="ficha-body">
+                            <p>Has dominado las 150 piezas fundamentales (50 HTML, 50 CSS, 50 JS). Ahora tienes el poder
+                                de
+                                construir casi cualquier cosa.</p>
+                            <div class="code-block">console.log("Misión Cumplida");</div>
+                            <button class="btn-ver" onclick="confetti_manual()">¡LANZAR CELEBRACIÓN!</button>
+                            <script>
+                                function confetti_manual() {
+                                    alert('🎊 ¡FELICIDADES! 🎊\nHas completado tu manual técnico.\n\nEstructura: OK\nDiseño: OK\nLógica: OK');
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="ficha" style="border-left: 4px solid #6c5ce7;">
+                        <div class="ficha-head"><span>151. El Mapa FullStack</span> <span>Front vs Back</span></div>
+                        <div class="ficha-body">
+                            <p><b>Frontend:</b> Todo lo que hemos hecho (HTML, CSS, JS). Lo que el usuario toca. <br>
+                                <b>Backend:</b> El servidor, la base de datos y la lógica oculta (Node.js, Python, SQL).
+                            </p>
+                            <div class="tips">💡 Un desarrollador "FullStack" es quien domina ambos mundos.</div>
+                            <button class="btn-ver" onclick="toggle('d151')">Ver Analogía</button>
+                            <div id="d151" class="demo">
+                                <div class="folio">
+                                    <p>🎭 <b>Frontend:</b> El escenario y los actores.</p>
+                                    <p>⚙️ <b>Backend:</b> Las luces, el sonido y los guionistas que no se ven.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #007acc;">
+                        <div class="ficha-head"><span>152. VS Code</span> <span>Tu mesa de trabajo</span></div>
+                        <div class="ficha-body">
+                            <p>Visual Studio Code es el estándar de la industria. No es un Word; tiene herramientas que
+                                colorean
+                                el
+                                código, detectan errores y se conectan a internet.</p>
+                            <div class="tips">🚀 <b>Tip:</b> Instala la extensión "Live Server" para ver tus cambios al
+                                instante
+                                sin
+                                refrescar manualmente.</div>
+                            <button class="btn-ver"
+                                onclick="alert('Estás listo para dejar el bloc de notas y usar un IDE profesional.')">Saber
+                                más</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #2d3436;">
+                        <div class="ficha-head"><span>153. La Terminal</span> <span>Hablar directo al PC</span></div>
+                        <div class="ficha-body">
+                            <p>Es la pantalla negra donde escribes comandos. Un programador la usa para instalar
+                                librerías,
+                                arrancar
+                                servidores o gestionar archivos sin usar el ratón.</p>
+                            <div class="code-block">mkdir mi-proyecto (Crea una carpeta)
+                                cd mi-proyecto (Entra en ella)</div>
+                            <button class="btn-ver" onclick="toggle('d153')">Ver Comandos</button>
+                            <div id="d153" class="demo">
+                                <div class="folio"
+                                    style="background: #000; color: #0f0; font-family: monospace; padding: 10px;">
+                                    C:\Users\Programador> npm start _
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #f05032;">
+                        <div class="ficha-head"><span>154. Git & GitHub</span> <span>Máquina del tiempo</span></div>
+                        <div class="ficha-body">
+                            <p><b>Git:</b> Te permite guardar "fotos" de tu código. Si rompes algo, puedes volver al
+                                pasado.
+                                <br>
+                                <b>GitHub:</b> Es la red social donde subes tu código para que otros lo vean o para
+                                trabajar en
+                                equipo.
+                            </p>
+                            <div class="tips">🛡️ Sin Git, un error grave puede hacerte perder días de trabajo.</div>
+                            <button class="btn-ver"
+                                onclick="alert('Git es el currículum real de un programador hoy en día.')">Explicación</button>
+                        </div>
+                    </div>
+
+                    <div class="ficha" style="border-left: 4px solid #00d2d3;">
+                        <div class="ficha-head"><span>155. IA en Programación</span> <span>Tu Copiloto</span></div>
+                        <div class="ficha-body">
+                            <p>Las IA (como Claude o ChatGPT) no reemplazan al programador, lo potencian. Úsalas para
+                                explicar
+                                errores, optimizar código o aprender conceptos nuevos.</p>
+                            <div class="tips">⚠️ <b>Cuidado:</b> No copies y pegues sin entender, o nunca aprenderás a
+                                pensar
+                                como
+                                programador.</div>
+                            <button class="btn-ver"
+                                onclick="alert('¡Estás usando una ahora mismo para crear este manual!')">IA
+                                activa</button>
+                        </div>
+                        <div class="ficha" style="border-left: 4px solid var(--new);">
+                            <div class="ficha-head"><span>156. Flexbox</span> <span>Alineación Eficaz</span></div>
+                            <div class="ficha-body">
+                                <p>Usa <code>display: flex;</code> para alinear elementos fácilmente sin pelearte con
+                                    los
+                                    floats.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid var(--new);">
+                            <div class="ficha-head"><span>157. Grid</span> <span>Diseño en Rejilla</span></div>
+                            <div class="ficha-body">
+                                <p>Ideal para crear estructuras web complejas de filas y columnas con precisión total.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid var(--new);">
+                            <div class="ficha-head"><span>158. Media Queries</span> <span>Web Responsiva</span></div>
+                            <div class="ficha-body">
+                                <p>Permiten que tu manual se adapte y se vea bien tanto en móviles como en ordenadores.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid var(--new);">
+                            <div class="ficha-head"><span>159. LocalStorage</span> <span>Memoria del Navegador</span>
+                            </div>
+                            <div class="ficha-body">
+                                <p>Sirve para que tu web "recuerde" si el usuario activó el modo oscuro incluso si
+                                    cierra la
+                                    página.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ficha" style="border-left: 4px solid #e67e22;">
+                            <div class="ficha-head"><span>160. scroll-margin-top</span> <span>Anclajes
+                                    Inteligentes</span></div>
+                            <div class="ficha-body">
+                                <p>Evita que al pulsar un botón del menú, el título de la sección quede tapado por el
+                                    propio
+                                    menú.
+                                    Le dice al navegador: "Para el scroll 100px antes de llegar".</p>
+                                <div class="code-block">[id^="seccion-"] { scroll-margin-top: 100px; }</div>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #e67e22;">
+                            <div class="ficha-head"><span>161. backdrop-filter: blur</span> <span>Efecto Cristal</span>
+                            </div>
+                            <div class="ficha-body">
+                                <p>Es el efecto que hace que el menú superior sea semitransparente y desenfoque lo que
+                                    hay
+                                    detrás,
+                                    dándole un toque elegante y moderno.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>162. .scrollIntoView()</span> <span>Navegación Suave</span>
+                            </div>
+                            <div class="ficha-body">
+                                <p>Orden de JavaScript que hace que la pantalla se mueva sola hasta el elemento que tú
+                                    quieras.
+                                    Usamos <code>behavior: 'smooth'</code> para que no pegue un salto brusco.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>163. .innerHTML</span> <span>Cambio de Texto</span></div>
+                            <div class="ficha-body">
+                                <p>Permite a JavaScript cambiar el contenido de un botón o párrafo sobre la marcha. Lo
+                                    usamos
+                                    para
+                                    que el botón diga "☀️ Claro" o "🌙 Modo" según toque.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>164. classList.contains()</span> <span>El Detective</span>
+                            </div>
+                            <div class="ficha-body">
+                                <p>Es como una pregunta que hace JavaScript: "¿Tiene el body la clase 'modo-oscuro'
+                                    puesta?".
+                                    Dependiendo de la respuesta, decidimos qué color o texto poner.</p>
+                            </div>
+                        </div>
+                        <div class="ficha" style="border-left: 4px solid #f1c40f;">
+                            <div class="ficha-head"><span>165. &lt;!DOCTYPE html&gt;</span> <span>El Origen</span></div>
+                            <div class="ficha-body">
+                                <p>Es la primera línea de toda web. Le indica al navegador que estamos usando la versión
+                                    moderna
+                                    de
+                                    HTML
+                                    (HTML5).</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f1c40f;">
+                            <div class="ficha-head"><span>166. &lt;meta name="viewport"&gt;</span> <span>Móviles</span>
+                            </div>
+                            <div class="ficha-body">
+                                <p>Este comando ajusta el ancho de la web al tamaño de la pantalla del dispositivo
+                                    (móvil,
+                                    tablet o
+                                    PC).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #e67e22;">
+                            <div class="ficha-head"><span>167. :root { --color }</span> <span>Paleta Mágica</span></div>
+                            <div class="ficha-body">
+                                <p>Permite guardar colores en "nombres" (como --bg o --text) para cambiarlos todos a la
+                                    vez al
+                                    activar
+                                    el modo oscuro.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #e67e22;">
+                            <div class="ficha-head"><span>168. position: fixed;</span> <span>Menú Fijo</span></div>
+                            <div class="ficha-body">
+                                <p>Es el truco usado para que tus botones de navegación se queden siempre arriba
+                                    mientras el
+                                    usuario
+                                    baja por las fichas.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #e67e22;">
+                            <div class="ficha-head"><span>169. z-index: 999;</span> <span>Capas</span></div>
+                            <div class="ficha-body">
+                                <p>Controla qué elementos están "encima" de otros. Lo usamos para que el menú no sea
+                                    tapado por
+                                    las
+                                    fichas.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>170. document.getElementById</span> <span>Selector JS</span>
+                            </div>
+                            <div class="ficha-body">
+                                <p>La orden que usa JavaScript para "agarrar" una sección (como la de CSS) y poder
+                                    mostrarla o
+                                    esconderla.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>171. classList.toggle()</span> <span>Interruptor</span></div>
+                            <div class="ficha-body">
+                                <p>Es la función que "enciende" y "apaga" la clase <code>modo-oscuro</code> en el cuerpo
+                                    (body)
+                                    de
+                                    la
+                                    página.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>172. style.display</span> <span>Visibilidad</span></div>
+                            <div class="ficha-body">
+                                <p>Con <code>none</code> escondemos una sección y con <code>block</code> la mostramos.
+                                    Así
+                                    funcionan
+                                    tus
+                                    pestañas superiores.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #f39c12;">
+                            <div class="ficha-head"><span>173. onclick="funcion()"</span> <span>Acción</span></div>
+                            <div class="ficha-body">
+                                <p>Atributo HTML que detecta cuando el usuario hace clic en un botón para ejecutar una
+                                    orden de
+                                    JavaScript.</p>
+                            </div>
+                        </div>
+
+                        <div class="ficha" style="border-left: 4px solid #ccff00; background: rgba(204, 255, 0, 0.05);">
+                            <div class="ficha-head"><span>174. META ALCANZADA</span> <span>¡Felicidades!</span></div>
+                            <div class="ficha-body">
+                                <p>Has aprendido los comandos y también cómo se unieron para crear esta misma
+                                    herramienta. ¡Ya
+                                    puedes
+                                    crear tu propia versión!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function toggle(id) {
+                        var x = document.getElementById(id);
+                        var all = document.querySelectorAll('.demo');
+                        // all.forEach(d => d.style.display = "none"); // Descomenta si quieres que solo se vea una a la vez
+                        x.style.display = (x.style.display === "block") ? "none" : "block";
+                    }
+                </script>
+                <script>
+                    const boton = document.getElementById('btn-maestro');
+
+                    boton.addEventListener('click', () => {
+                        // Esto activa/desactiva el modo oscuro
+                        document.body.classList.toggle('modo-oscuro');
+
+                        // Esto cambia el texto del botón para que sepas qué vas a activar
+                        if (document.body.classList.contains('modo-oscuro')) {
+                            boton.innerHTML = "☀️ Claro";
+                        } else {
+                            boton.innerHTML = "🌙 Modo";
+                        }
+                    });
+                </script>
+    </body>
+
+</html>
