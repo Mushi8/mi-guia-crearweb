@@ -1,6 +1,7 @@
 # 📚 Mi Guía Resumen de Creación Web
 
 ¡Bienvenido! Este proyecto es una **guía interactiva y resumen personal** diseñada para estudiar y repasar los pilares fundamentales del desarrollo web: **HTML, CSS y JavaScript**.
+"🤝 Contribuciones: Si encuentras algún error en las fichas de 900px o quieres añadir un concepto de JS, ¡siéntete libre de abrir un Issue o enviarme un Pull Request!"
 
 ## 🚀 Objetivo
 El propósito de esta web es servir como material de consulta rápido, organizado en fichas didácticas, para entender desde el `DOCTYPE` hasta la manipulación del DOM con JS.
